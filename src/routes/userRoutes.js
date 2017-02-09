@@ -7,8 +7,8 @@ var mysql = require('mysql');
 //var BaseRow = db.Row;
 //var BaseTable = db.Table;
 
-// mysql connection configuration
-var connection = mysql.createConnection({
+// mysql pool connection configuration
+var pool = mysql.createPool({
   host: 'us-cdbr-iron-east-04.cleardb.net',
   user: 'b512c6c77f34ed',
   password: 'ce363924',
@@ -25,22 +25,23 @@ var router = function() {
     dbRouter.route('/')
     // get method to get all users registered
         .get(function(req, res){
-            // connect to db
-            connection.connect(function(err){
-                if(!err) {
-                    console.log("Database is connected...");    
-                    // Query database
-                    connection.query('SELECT * from tb_cliente', function(err, rows, fields) {
-                        connection.end();
-                        if (!err) {
-                            console.log('The solution is: ', rows);
-                            res.send(rows);
-                        } else
-                            console.log('Error while performing Query.');
-                    });
-                } else {
-                    console.log("Error connecting database ... nn");
-                }
+
+            // Query database (connection implicitly established)
+
+            pool.getConnection(function(err, connection) {
+                // Use the connection 
+                connection.query('SELECT * from tb_cliente', function(err, results, fields) {
+                    // And done with the connection. 
+                    connection.release();
+
+                    if (!err) {
+                    console.log('The solution is: ', results);
+                        res.send(results);
+                    } else { // Handle error after the release. 
+                        console.log('Error while performing Query.');
+                        res.send(err);
+                    }
+                });
             });
 
         });
