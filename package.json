@@ -9,6 +9,7 @@
     "cfenv": "1.0.x",
     "ejs": "^2.5.5",
     "express": "4.13.x",
+    "mysql": "^2.13.0",
     "node-mysql": "^0.4.2"
   },
   "repository": {},
