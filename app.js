@@ -1,9 +1,5 @@
 /*eslint-env node*/
 
-//------------------------------------------------------------------------------
-// node.js starter application for Bluemix
-//------------------------------------------------------------------------------
-
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
 var express = require('express');
@@ -15,11 +11,27 @@ var cfenv = require('cfenv');
 // create a new express server
 var app = express();
 
-// serve the files out of ./public as our main files
-app.use(express.static(__dirname + '/public'));
+// importing routes
+// passing nav array of items
+var userRouter = require('./src/routes/userRoutes.js')();
+
+/*
+    setting up the middleware
+*/
+
+// setting the public directory for static files
+app.use(express.static('public'));
 
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
+
+// setting the views directory
+app.set('views', './src/views');
+// setting ejs as the view engine
+app.set('view engine', 'ejs');
+
+// using the routes
+app.use('/user', userRouter);
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
