@@ -16,14 +16,14 @@ var pool = mysql.createPool({
   connectionLimit: 4  
 });
 
-var dbRouter = express.Router();
+var userRouter = express.Router();
 
 // function router
 var router = function() {
 
     // Setting route for /
-    dbRouter.route('/')
-    // get method to get all users registered
+    userRouter.route('/')
+    // GET method to get all users registered
         .get(function(req, res){
 
             // Query database (connection implicitly established)
@@ -31,6 +31,39 @@ var router = function() {
             pool.getConnection(function(err, connection) {
                 // Use the connection 
                 connection.query('SELECT * from tb_cliente', function(err, results, fields) {
+                    // And done with the connection. 
+                    connection.release();
+
+                    if (!err) {
+                    console.log('The users are: ', results);
+                        res.send(results);
+                    } else { // Handle error after the release. 
+                        console.log('Error while performing Query.');
+                        res.send(err);
+                    }
+                });
+            });
+        })
+        // POST method to register a new user
+        .post(function(req, res){
+            
+            // Query database (connection implicitly established)
+            pool.getConnection(function(err, connection) {
+
+                // preparying query                   
+                var sql = "CALL pr_criar_nova_conta (?,?,STR_TO_DATE(?,'%d/%m/%Y'),?,?,?,?)";
+                var inserts = [req.body.txt_nome, 
+                                    req.body.nr_cpf, 
+                                    req.body.dt_nascimento, 
+                                    req.body.txt_email, 
+                                    req.body.nr_telefone, 
+                                    req.body.txt_email, 
+                                    req.body.txt_senha];
+
+                sql = mysql.format(sql, inserts);
+
+                // Use the connection 
+                connection.query(sql, function(err, results, fields) {
                     // And done with the connection. 
                     connection.release();
 
@@ -43,10 +76,9 @@ var router = function() {
                     }
                 });
             });
+        });  
 
-        });
-
-    return dbRouter;
+    return userRouter;
 };
 
 // exporting the user router

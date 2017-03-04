@@ -8,6 +8,9 @@ var express = require('express');
 // for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
 
+// package to parse the body of a request into a JSON object
+var bodyParser = require('body-parser');
+
 // create a new express server
 var app = express();
 
@@ -22,6 +25,11 @@ var userRouter = require('./src/routes/userRoutes.js')();
 // setting the public directory for static files
 app.use(express.static('public'));
 
+// parse application/json (parse the body into req.body for json encoded)
+app.use(bodyParser.json());
+// parse application/x-www-form-urlencoded (parse the body into req.body for url encoded)
+app.use(bodyParser.urlencoded({extended: false}));
+
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
 
@@ -31,7 +39,7 @@ app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
 // using the routes
-app.use('/user', userRouter);
+app.use('/usuario', userRouter);
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
