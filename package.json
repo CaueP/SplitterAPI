@@ -11,7 +11,16 @@
     "ejs": "^2.5.5",
     "express": "4.13.x",
     "mysql": "^2.13.0",
-    "node-mysql": "^0.4.2"
+    "node-mysql": "^0.4.2",
+    "gulp-mocha": "^3.0.1",
+    "should": "^11.1.2",
+    "sinon": "^1.17.7"
+  },
+  "devDependencies": {
+    "gulp-env": "^0.4.0",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "supertest": "^2.0.1"
   },
   "repository": {},
   "engines": {

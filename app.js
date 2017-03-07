@@ -11,12 +11,24 @@ var cfenv = require('cfenv');
 // package to parse the body of a request into a JSON object
 var bodyParser = require('body-parser');
 
+// configuring the MySQL DB
+var mysql = require('mysql');
+
+// mysql pool connection configuration
+var mySqlPool = mysql.createPool({
+  host: 'us-cdbr-iron-east-03.cleardb.net',
+  user: 'bf581ab6083cb1',
+  password: '1979175d',
+  database: 'ad_2f6fb0f5141bb38',
+  connectionLimit: 4  
+});
+
 // create a new express server
 var app = express();
 
 // importing routes
-// passing nav array of items
-var userRouter = require('./src/routes/userRoutes.js')();
+// passing mySqlPool connection
+var userRouter = require('./src/routes/userRoutes.js')(mySqlPool);
 
 /*
     setting up the middleware
@@ -39,7 +51,7 @@ app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
 // using the routes
-app.use('/usuario', userRouter);
+app.use('/api/usuario', userRouter);
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
