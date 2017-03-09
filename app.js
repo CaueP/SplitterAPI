@@ -54,6 +54,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
 
+console.log(appEnv.cleardb);
 // setting the views directory
 app.set('views', './src/views');
 // setting ejs as the view engine
