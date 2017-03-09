@@ -51,8 +51,9 @@ var userController = function(pool){
                 connection.release();
 
                 if (!err) {
-                console.log('The users are: ', results);
-                    res.send(results);
+                    console.log('The users is: ', results[0]);
+                    res.status(200).json(results);
+
                 } else { // Handle error after the release. 
                     console.log('Error while performing Query.');
                     res.send(err);
@@ -81,17 +82,16 @@ var userController = function(pool){
 
                 // Use the connection 
                 connection.query(sql, function(err, results, fields) {
-                    // And done with the connection. 
-                    console.log(results);
+                    // And done with the connection.
                     connection.release();
                     if (!err) {
-                        if (results[0] == null) {
+                        if (!results[0][0]) {
                             console.log('Usuario inexistente');
                             res.status(404).send('usuario inexistente');                        
                         }
                         else {
-                            console.log('The user is: ', results[0]);
-                            res.send(results[0]);
+                            console.log('The user is : ', results[0].length, results);
+                            res.status(200).json(results[0][0]);
                         }
                     
                     } else { // Handle error after the release. 
@@ -112,25 +112,28 @@ var userController = function(pool){
                 console.log(err);
             }
             else {
-
                 // preparying query                   
                 var sql = "CALL pr_atualizar_conta (?,?,STR_TO_DATE(?,'%d/%m/%Y'),?,?,?)";
                 var inserts = [req.body.txt_nome, 
                                     req.body.nr_cpf, 
                                     req.body.dt_nascimento, 
-                                    req.body.txt_email, 
+                                    req.params.email, 
                                     req.body.nr_telefone, 
                                     req.body.txt_senha];
 
                 sql = mysql.format(sql, inserts);
+                console.log(sql);
                 // Use the connection 
                 connection.query(sql, function(err, results, fields) {
                     // And done with the connection. 
                     connection.release();
-
                     if (!err) {
-                    console.log('User updated: ', results);
-                        res.send(results);
+                        if(results.affectedRows != 1){
+                            res.status(404).send('conta nao atualizada');
+                        } else{
+                            console.log('User updated: ', results);
+                            res.status(200).send('conta atualizada');
+                        }
                     } else { // Handle error after the release. 
                         console.log('Error while performing Query.');
                         res.send(err);
@@ -151,18 +154,23 @@ var userController = function(pool){
             else {
 
                 // preparying query                   
-                var sql = "UPDATE tb_cliente SET conta_ativa=0 WHERE id = (SELECT id FROM tb_login WHERE txt_login =?);";
-                var inserts = [req.body.txt_email];
-
+                var sql = "UPDATE tb_cliente SET conta_ativa=0 WHERE id = (SELECT id FROM tb_login WHERE txt_login = ?);";
+                var inserts = [req.params.email];
+                
                 sql = mysql.format(sql, inserts);
+                console.log(sql);
                 // Use the connection 
                 connection.query(sql, function(err, results, fields) {
                     // And done with the connection. 
                     connection.release();
 
                     if (!err) {
-                    console.log('User updated: ', results);
-                        res.send(results);
+                         if(results.affectedRows != 1){
+                            res.status(404).send('conta nao desativada');
+                        } else{
+                            console.log('User updated: ', results);
+                            res.status(200).send('conta desativada');
+                        }
                     } else { // Handle error after the release. 
                         console.log('Error while performing Query.');
                         res.send(err);
