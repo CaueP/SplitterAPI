@@ -1,0 +1,14 @@
+{    
+    "cleardb": [
+        {
+            "credentials": {
+                "uri": "mysql://root:@localhost:3306/splitterdb?reconnect=true",
+                "name": "splitterdb",
+                "hostname": "localhost",
+                "port": "3306",
+                "username": "root",
+                "password": ""
+            }
+        }
+    ]
+}
