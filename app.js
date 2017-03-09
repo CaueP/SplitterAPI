@@ -15,22 +15,22 @@ var bodyParser = require('body-parser');
 var mysql = require('mysql');
 
 // mysql pool connection configuration
-var mySqlPool = mysql.createPool({
-  host: 'us-cdbr-iron-east-03.cleardb.net',
-  user: 'bf581ab6083cb1',
-  password: '1979175d',
-  database: 'ad_2f6fb0f5141bb38',
-  connectionLimit: 4  
-});
-
-// // local config
 // var mySqlPool = mysql.createPool({
-//   host: 'localhost',
-//   user: 'root',
-//   password: '',
-//   database: 'splitterdb',
+//   host: 'us-cdbr-iron-east-03.cleardb.net',
+//   user: 'bf581ab6083cb1',
+//   password: '1979175d',
+//   database: 'ad_2f6fb0f5141bb38',
 //   connectionLimit: 4  
 // });
+
+// local config
+var mySqlPool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'splitterdb',
+  connectionLimit: 4  
+});
 
 // create a new express server
 var app = express();

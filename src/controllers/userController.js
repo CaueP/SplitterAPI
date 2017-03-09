@@ -24,13 +24,20 @@ var userController = function(pool){
             connection.query(sql, function(err, results, fields) {
                 // And done with the connection. 
                 connection.release();
-
+console.log(results)
                 if (!err) {
-                console.log('The solution is: ', results);
-                    res.send(results);
+                    if(!results[0][0]){
+                            res.status(404).send('conta nao criada');
+                        } else{
+                            
+                            console.log('usuario criado: ', req.body.txt_email);
+                            res.status(201).send('usuario criado');
+                        }
+                    
                 } else { // Handle error after the release. 
                     console.log('Error while performing Query.');
-                    res.send(err);
+                    //res.send(err);
+                    res.status(404).send('conta nao criada');
                 }
             });
         });
@@ -87,7 +94,7 @@ var userController = function(pool){
                     if (!err) {
                         if (!results[0][0]) {
                             console.log('Usuario inexistente');
-                            res.status(404).send('usuario inexistente');                        
+                            res.status(404).send('usuario inexistente');                    
                         }
                         else {
                             console.log('The user is : ', results[0].length, results);
