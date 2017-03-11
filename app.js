@@ -56,6 +56,7 @@ function initDBConnection() {
     //containing all the service credentials of all the bound services
     if (process.env.VCAP_SERVICES) {
         dbCredentials.uri = getDBCredentialsUrl(process.env.VCAP_SERVICES);
+        console.log("Conectando ao DB na nuvem");
     } else { //When running locally, the VCAP_SERVICES will not be set
 
         // When running this app locally you can get your MySQL credentials
@@ -66,7 +67,7 @@ function initDBConnection() {
         // Bluemix service.
         // uri will be in this format: mysql://root:@localhost:3306/splitterdb?reconnect=true
         dbCredentials.uri = getDBCredentialsUrl(fs.readFileSync("vcap-local.json", "utf-8"));
-        console.log(dbCredentials.uri);
+        console.log("Conectando ao DB local");
     }
 
     mySqlDB = mysql.createPool(dbCredentials.uri);

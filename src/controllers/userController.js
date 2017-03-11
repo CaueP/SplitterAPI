@@ -37,7 +37,15 @@ console.log(results)
                 } else { // Handle error after the release. 
                     console.log('Error while performing Query.');
                     //res.send(err);
-                    res.status(404).send('conta nao criada');
+                    console.log('Error: ', err.code);
+                    //var jsonError = JSON.parse(err);
+                    if(err.code = 'ER_DUP_ENTRY') {
+                        console.log('conta existente');
+                        req.params.email = req.body.txt_email;
+                        ativarConta(req, res);
+                    } else {
+                        res.status(404).send('conta nao criada');
+                    }                    
                 }
             });
         });
@@ -72,7 +80,7 @@ console.log(results)
     };
 
     var buscarConta = function(req, res){
-            
+
         // Query database (connection implicitly established)
         pool.getConnection(function(err, connection) {
 
@@ -138,8 +146,13 @@ console.log(results)
                         if(results.affectedRows != 1){
                             res.status(404).send('conta nao atualizada');
                         } else{
-                            console.log('User updated: ', results);
-                            res.status(200).send('conta atualizada');
+                            if (req.body.ativada) {
+                                res.status(200).send('conta ativada');
+                            }
+                            else {
+                                console.log('User updated: ', results);
+                                res.status(200).send('conta atualizada');
+                            }                            
                         }
                     } else { // Handle error after the release. 
                         console.log('Error while performing Query.');
@@ -177,6 +190,45 @@ console.log(results)
                         } else{
                             console.log('User updated: ', results);
                             res.status(200).send('conta desativada');
+                        }
+                    } else { // Handle error after the release. 
+                        console.log('Error while performing Query.');
+                        console.log('Error: ', err);
+                        res.send(err);
+                    }
+                });
+            }
+        });
+    };
+
+    var ativarConta = function(req, res){
+            
+        // Query database (connection implicitly established)
+        pool.getConnection(function(err, connection) {
+
+            if(err) {
+                console.log(err);
+            }
+            else {
+
+                // preparying query                   
+                var sql = "UPDATE tb_cliente SET conta_ativa=1 WHERE id = (SELECT id FROM tb_login WHERE txt_login = ?);";
+                var inserts = [req.params.email];
+                
+                sql = mysql.format(sql, inserts);
+                console.log(sql);
+                // Use the connection 
+                connection.query(sql, function(err, results, fields) {
+                    // And done with the connection. 
+                    connection.release();
+
+                    if (!err) {
+                         if(results.affectedRows != 1){
+                            res.status(404).send('conta existente');
+                        } else{
+                            console.log('User updated: ', results);
+                            req.body.ativada = true;
+                            atualizarConta(req, res);
                         }
                     } else { // Handle error after the release. 
                         console.log('Error while performing Query.');
