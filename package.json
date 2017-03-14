@@ -1,9 +1,18 @@
 {
   "name": "splitter-api",
+  "description": "Splitter API for Splitter Application",
   "version": "0.0.1",
   "private": true,
+   "apidoc": {
+      "name": "Splitter API Documentation",
+      "version": "0.0.1",
+      "description": "Documentation of Splitter API for Splitter application",
+      "title": "Splitter API Documentation",
+      "url" : "http://splitter.mybluemix.net/api/"
+  },
   "scripts": {
-    "start": "node app.js"
+    "start": "npm run apidoc && node app.js",
+    "apidoc": "apidoc --file-filters .js --input src/routes/ --output public/apidoc/"
   },
   "dependencies": {
     "body-parser": "^1.17.0",

@@ -75,16 +75,6 @@ function initDBConnection() {
 
 initDBConnection();
 
-// local config
-// var mySqlPool = mysql.createPool({
-//   host: 'localhost',
-//   user: 'root',
-//   password: '',
-//   database: 'splitterdb',
-//   connectionLimit: 4  
-// });
-
-
 // importing routes
 // passing mySqlPool connection
 var userRouter = require('./src/routes/userRoutes.js')(mySqlDB);
