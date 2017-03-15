@@ -10,13 +10,13 @@ var userController = function(pool){
 
             // preparying query                   
             var sql = "CALL pr_criar_nova_conta (?,?,STR_TO_DATE(?,'%d/%m/%Y'),?,?,?,?)";
-            var inserts = [req.body.txt_nome, 
-                                req.body.nr_cpf, 
-                                req.body.dt_nascimento, 
-                                req.body.txt_email, 
-                                req.body.nr_telefone, 
-                                req.body.txt_email, 
-                                req.body.txt_senha];
+            var inserts = [req.body.nome, 
+                                req.body.cpf, 
+                                req.body.dataNascimento, 
+                                req.body.email, 
+                                req.body.telefone, 
+                                req.body.email, 
+                                req.body.senha];
 
             sql = mysql.format(sql, inserts);
 
@@ -24,27 +24,27 @@ var userController = function(pool){
             connection.query(sql, function(err, results, fields) {
                 // And done with the connection. 
                 connection.release();
-console.log(results)
+                console.log('criarConta: ', results)
                 if (!err) {
                     if(!results[0][0]){
-                            res.status(404).send('conta nao criada');
-                        } else{
-                            
-                            console.log('usuario criado: ', req.body.txt_email);
-                            res.status(201).send('usuario criado');
+                            res.status(404).json('{"error": "ContaNaoCriada"}');
+                        } else{                            
+                            console.log('usuario criado: ', req.body.email);
+                            //console.log(results);
+                            res.status(201).json(results[0][0]);
                         }
                     
                 } else { // Handle error after the release. 
                     console.log('Error while performing Query.');
-                    //res.send(err);
                     console.log('Error: ', err.code);
-                    //var jsonError = JSON.parse(err);
+                    // verifica se o usuario ja existe
                     if(err.code = 'ER_DUP_ENTRY') {
                         console.log('conta existente');
-                        req.params.email = req.body.txt_email;
-                        ativarConta(req, res);
+                        req.params.email = req.body.email;
+                        req.body.contaExistente = true;
+                        middlewareConta(req, res, ativarConta);
                     } else {
-                        res.status(404).send('conta nao criada');
+                        res.status(404).json('{"error": "ContaNaoCriada"}');
                     }                    
                 }
             });
@@ -61,12 +61,12 @@ console.log(results)
             }
             else {
                             // Use the connection 
-            connection.query('SELECT * from tb_cliente', function(err, results, fields) {
+            connection.query("SELECT c.id AS id, c.txt_nome AS nome, c.nr_cpf AS cpf, DATE_FORMAT(c.dt_nascimento,'%d/%m/%Y') AS dataNascimento, c.txt_email AS email, c.nr_telefone AS telefone, c.conta_ativa AS contaAtiva FROM tb_cliente c JOIN tb_login l ON c.txt_email = l.txt_login", function(err, results, fields) {
                 // And done with the connection. 
                 connection.release();
 
                 if (!err) {
-                    console.log('The users is: ', results[0]);
+                    console.log('The users are: ', results[0]);
                     res.status(200).json(results);
 
                 } else { // Handle error after the release. 
@@ -79,7 +79,7 @@ console.log(results)
         });
     };
 
-    var buscarConta = function(req, res){
+    var middlewareConta = function(req, res, next) {
 
         // Query database (connection implicitly established)
         pool.getConnection(function(err, connection) {
@@ -99,110 +99,155 @@ console.log(results)
                 connection.query(sql, function(err, results, fields) {
                     // And done with the connection.
                     connection.release();
-                    if (!err) {
+                    var message;
+
+                    if(err) {// Handle error after the release. 
+                        message = {
+                                error: "UsuarioNaoEncontrado"
+                            };
+                        console.log('Error while performing Query.');
+                        res.status(500).json(message);
+                    } else {
                         if (!results[0][0]) {
-                            console.log('Usuario inexistente');
-                            res.status(404).send('usuario inexistente');                    
+                            message = {
+                                error: "UsuarioNaoEncontrado"
+                            };
+                            console.log('UsuarioNaoEncontrado');
+                            res.status(404).json(message);                    
                         }
                         else {
-                            console.log('The user is : ', results[0].length, results);
-                            res.status(200).json(results[0][0]);
+                            req.conta = results[0][0];
+                            // convert int to boolean
+                            req.conta.contaAtiva = Boolean(req.conta.contaAtiva);
+                            if(req.body.contaExistente){
+                                if(req.conta.contaAtiva) {
+                                    message = {
+                                        error: "ContaExistente"
+                                    };
+                                    res.status(300).json(message);
+                                } else {    //encaminha para reativar a conta
+                                    next(req, res);
+                                }                                
+                            } else {
+                                next();
+                            }
+                            
+                            //res.status(200).json(results[0][0]);
                         }
-                    
-                    } else { // Handle error after the release. 
-                        console.log('Error while performing Query.');
-                        res.send(err);
                     }
                 }); 
             }
         });
     };
 
-    var atualizarConta = function(req, res){
-            
-        // Query database (connection implicitly established)
-        pool.getConnection(function(err, connection) {
-            
-            if(err) {
-                console.log(err);
-            }
-            else {
-                // preparying query                   
-                var sql = "CALL pr_atualizar_conta (?,?,STR_TO_DATE(?,'%d/%m/%Y'),?,?,?)";
-                var inserts = [req.body.txt_nome, 
-                                    req.body.nr_cpf, 
-                                    req.body.dt_nascimento, 
-                                    req.params.email, 
-                                    req.body.nr_telefone, 
-                                    req.body.txt_senha];
+    var buscarConta = function(req, res){
+        console.log('Conta encontrada: ', req.conta);
+        res.status(200).json(req.conta);        
+    };
 
-                sql = mysql.format(sql, inserts);
-                console.log(sql);
-                // Use the connection 
-                connection.query(sql, function(err, results, fields) {
-                    // And done with the connection. 
-                    connection.release();
-                    if (!err) {
-                        if(results.affectedRows != 1){
-                            res.status(404).send('conta nao atualizada');
-                        } else{
-                            if (req.body.ativada) {
-                                res.status(200).send('conta ativada');
-                            }
-                            else {
-                                console.log('User updated: ', results);
-                                res.status(200).send('conta atualizada');
-                            }                            
+    var atualizarConta = function(req, res){
+        console.log(req.conta);
+        if(req.conta.contaAtiva) {
+            // Query database (connection implicitly established)
+            pool.getConnection(function(err, connection) {
+                
+                if(err) {
+                    //res.send(err);
+                    message = {
+                        error: err
+                    };
+                    res.status(500).json(message);
+                }
+                else {
+                    // preparying query                   
+                    var sql = "CALL pr_atualizar_conta (?,?,STR_TO_DATE(?,'%d/%m/%Y'),?,?,?)";
+                    var inserts = [req.body.nome, 
+                                    req.body.cpf, 
+                                    req.body.dataNascimento, 
+                                    req.params.email, 
+                                    req.body.telefone, 
+                                    req.body.senha];
+
+                    sql = mysql.format(sql, inserts);
+                    //console.log(sql);
+                    // Use the connection
+                    connection.query(sql, function(err, results, fields) {
+                        // And done with the connection. 
+                        connection.release();
+                        var message;
+                        if (!err) {
+                            req.contaAtualizada = results[0][0];
+                            req.contaAtualizada.contaAtiva = Boolean(req.contaAtualizada.contaAtiva);
+                            console.log('Conta atualizada: ', req.contaAtualizada);
+
+                            res.status(201).json(req.contaAtualizada);
+                        } else { // Handle error after the release. 
+                            console.log('Error while performing Query.');
+                            //res.send(err);
+                            message = {
+                                error: "ContaNaoAtualizada"
+                            };
+                            res.status(500).json(message);
                         }
-                    } else { // Handle error after the release. 
-                        console.log('Error while performing Query.');
-                        res.send(err);
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        } else {
+            console.log(req.conta);
+            message = {
+                    error: "ContaDesativada"
+            };
+            res.status(500).json(message);
+        }
     };
 
     var desativarConta = function(req, res){
-            
-        // Query database (connection implicitly established)
-        pool.getConnection(function(err, connection) {
+        if(req.conta.contaAtiva) {
+            // Query database (connection implicitly established)
+            pool.getConnection(function(err, connection) {
 
-            if(err) {
-                console.log(err);
-            }
-            else {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    // preparying query                   
+                    var sql = "UPDATE tb_cliente SET conta_ativa=0 WHERE id = (SELECT id FROM tb_login WHERE txt_login = ?);";
+                    var inserts = [req.params.email];
+                    
+                    sql = mysql.format(sql, inserts);
+                    //console.log(sql);
+                    // Use the connection 
+                    connection.query(sql, function(err, results, fields) {
+                        // And done with the connection. 
+                        connection.release();
 
-                // preparying query                   
-                var sql = "UPDATE tb_cliente SET conta_ativa=0 WHERE id = (SELECT id FROM tb_login WHERE txt_login = ?);";
-                var inserts = [req.params.email];
-                
-                sql = mysql.format(sql, inserts);
-                console.log(sql);
-                // Use the connection 
-                connection.query(sql, function(err, results, fields) {
-                    // And done with the connection. 
-                    connection.release();
-
-                    if (!err) {
-                         if(results.affectedRows != 1){
-                            res.status(404).send('conta nao desativada');
-                        } else{
-                            console.log('User updated: ', results);
-                            res.status(200).send('conta desativada');
+                        if (!err) {
+                            
+                            console.log('desativarConta: ', results);
+                            message = { result: "ContaDesativada"};
+                            res.status(200).json(message);
+                        } else { // Handle error after the release. 
+                            console.log('Error while performing Query.');
+                            console.log('Error: ', err);
+                            message = { result: "ContaNaoDesativada"};
+                            res.status(404).json(message);
                         }
-                    } else { // Handle error after the release. 
-                        console.log('Error while performing Query.');
-                        console.log('Error: ', err);
-                        res.send(err);
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+         } else {
+            message = { error: "ContaDesativada"};
+            res.status(404).json(message);
+        }
     };
 
     var ativarConta = function(req, res){
-            
+        var email;
+        if(req.body.contaExistente) {
+            email = req.body.email;
+        } else {
+            email = req.params.email;   
+        }
         // Query database (connection implicitly established)
         pool.getConnection(function(err, connection) {
 
@@ -213,21 +258,27 @@ console.log(results)
 
                 // preparying query                   
                 var sql = "UPDATE tb_cliente SET conta_ativa=1 WHERE id = (SELECT id FROM tb_login WHERE txt_login = ?);";
-                var inserts = [req.params.email];
+                var inserts = [email];
                 
                 sql = mysql.format(sql, inserts);
-                console.log(sql);
+                //console.log(sql);
                 // Use the connection 
                 connection.query(sql, function(err, results, fields) {
                     // And done with the connection. 
                     connection.release();
 
                     if (!err) {
+                        console.log('ativarConta: ', results)
+                        console.log('affectedRows = ', results.affectedRows);
                          if(results.affectedRows != 1){
-                            res.status(404).send('conta existente');
+                            //res.status(404).send('conta existente');
+                            if(req.body.contaExistente){
+                                res.status(304).json('{"error": "UsuarioExistente"}');
+                            } else {
+                                res.status(500).json('{"error": "ContaNaoAtivada"}');
+                            }                            
                         } else{
-                            console.log('User updated: ', results);
-                            req.body.ativada = true;
+                            req.conta.contaAtiva = true;
                             atualizarConta(req, res);
                         }
                     } else { // Handle error after the release. 
@@ -245,7 +296,8 @@ console.log(results)
         listaContas: listaContas,
         buscarConta: buscarConta,
         atualizarConta: atualizarConta,
-        desativarConta: desativarConta
+        desativarConta: desativarConta,
+        middlewareConta: middlewareConta
     }
 
 };
