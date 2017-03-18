@@ -31,7 +31,9 @@ var userController = function(pool){
                         } else{                            
                             console.log('usuario criado: ', req.body.email);
                             //console.log(results);
-                            res.status(201).json(results[0][0]);
+                            req.body.contaCriada = results[0][0];
+                            req.body.contaCriada.contaAtiva = Boolean(req.body.contaCriada.contaAtiva);
+                            res.status(201).json(req.body.contaCriada);
                         }
                     
                 } else { // Handle error after the release. 
