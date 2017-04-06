@@ -78,6 +78,7 @@ initDBConnection();
 // importing routes
 // passing mySqlPool connection
 var userRouter = require('./src/routes/userRoutes.js')(mySqlDB);
+var checkinRouter = require('./src/routes/checkinRoutes')(mySqlDB);
 
 // setting the views directory
 app.set('views', './src/views');
@@ -86,6 +87,7 @@ app.set('view engine', 'ejs');
 
 // using the routes
 app.use('/api/usuario', userRouter);
+app.use('/api/checkin', checkinRouter);
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {

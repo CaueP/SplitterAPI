@@ -27,6 +27,6 @@ gulp.task('test', function() {
     env({vars: {ENV: 'Test'}});
 
     // setting all files to be run
-    gulp.src('tests/*.js', {read: false})
-        .pipe(gulpMocha({reporter: 'nyan'}))
+    gulp.src('test/*.js', {read: false})
+        .pipe(gulpMocha({reporter: 'spec'}))    // spec or nyan
 });

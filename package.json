@@ -3,16 +3,17 @@
   "description": "Splitter API for Splitter Application",
   "version": "0.0.1",
   "private": true,
-   "apidoc": {
-      "name": "Splitter API Documentation",
-      "version": "0.0.1",
-      "description": "Documentation of Splitter API for Splitter application",
-      "title": "Splitter API Documentation",
-      "url" : "http://splitter.mybluemix.net/api/"
+  "apidoc": {
+    "name": "Splitter API Documentation",
+    "version": "0.0.1",
+    "description": "Documentation of Splitter API for Splitter application",
+    "title": "Splitter API Documentation",
+    "url": "http://splitter.mybluemix.net/api/"
   },
   "scripts": {
     "start": "npm install apidoc -g && npm run apidoc && node app.js",
-    "apidoc": "apidoc --file-filters .js --input src/routes/ --output public/apidoc/"
+    "apidoc": "apidoc --file-filters .js --input src/routes/ --output public/apidoc/",
+    "test": "mocha"
   },
   "dependencies": {
     "body-parser": "^1.17.0",
@@ -26,9 +27,12 @@
     "sinon": "^1.17.7"
   },
   "devDependencies": {
-    "gulp-env": "^0.4.0",
+    "assert": "^1.4.1",
     "gulp": "^3.9.1",
+    "gulp-env": "^0.4.0",
     "gulp-nodemon": "^2.2.1",
+    "mocha": "^3.2.0",
+    "sinon": "^1.17.7",
     "supertest": "^2.0.1"
   },
   "repository": {},

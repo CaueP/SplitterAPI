@@ -100,7 +100,7 @@ var router = function(mySqlPool) {
         * @apiErrorExample Error-Response:
         *     HTTP/1.1 304 Not Modified
         *     {
-        *       "error": "UsuarioExistente"
+        *       "error": "UsuarioNaoEncontrado"
         *     }
         *
         */
