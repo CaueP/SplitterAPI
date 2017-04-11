@@ -49,7 +49,7 @@ var router = function(mySqlPool) {
         *           "isSucesso": true,
         *           "mesa": {
         *               "nrMesa": 3,
-        *               "qrCodeOcupado": "001BARBRAHMAada.lovelace@history.com"
+        *               "qrCodeOcupado": "001TAVERNAada.lovelace@history.com"
         *           },
         *           "isPrimeiroUsuario": true
         *   }

@@ -5,7 +5,7 @@ var MESA_LIVRE = 'livre';
 
 // Variaveis para testar sem o banco
 var nrMesa = 3;
-var statusMesa = MESA_OCUPADA;
+var statusMesa = MESA_LIVRE;
 var qrCode = '001BARBRAHMA';
 var qrCodeOcupado = '001BARBRAHMAcaue.polimanti@gmail.com';
 var usuarioResponsavel = 'caue.polimanti@gmail.com';
@@ -55,6 +55,8 @@ var checkinController = function(pool){
                     },
                     isPrimeiroUsuario: true
                 }
+                // ocupando a mesa manualmente
+                statusMesa = MESA_OCUPADA;
                 res.status(201);
                 res.body = respostaCheckin;
                 res.json(respostaCheckin);
@@ -73,6 +75,9 @@ var checkinController = function(pool){
                         },
                         isPrimeiroUsuario: false
                     };
+                    // desocupando a mesa manualmente
+                    statusMesa = MESA_OCUPADA;
+
                     res.status(200);
                     res.json(respostaCheckin);          
                 } else {
