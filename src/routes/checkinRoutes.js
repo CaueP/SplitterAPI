@@ -6,6 +6,8 @@ var router = function(mySqlPool) {
     
     var checkinController = require('../controllers/checkinController')(mySqlPool);
 
+    checkinRouter.use(checkinController.middleware);
+
     checkinRouter.route('/')
         /**
         * @api {post} checkin/ Realizar check-in
@@ -75,6 +77,7 @@ var router = function(mySqlPool) {
         *
         */
         .post(checkinController.realizarCheckin)
+        .put(checkinController.atualizarStatusMesa)
 
     return checkinRouter;
 };
