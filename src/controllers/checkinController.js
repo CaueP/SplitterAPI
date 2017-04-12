@@ -4,7 +4,7 @@ var MESA_OCUPADA = 'ocupada';
 var MESA_LIVRE = 'livre';
 
 // Variaveis para testar sem o banco
-var nrMesa = 3;
+var nrMesa = 1;
 var statusMesa = MESA_LIVRE;
 var qrCode = '001BARBRAHMA';
 var qrCodeOcupado = '001BARBRAHMAcaue.polimanti@gmail.com';
@@ -21,6 +21,9 @@ var checkinController = function(pool){
         if(req.body.mesa)
             var mesa = req.body.mesa    // informações coletadas pelo qr code da mesa (Estabelecimento e numero da mesa)
         
+            console.log("Usuario recebido: " + JSON.stringify(usuario));
+            console.log("Mesa recebida: " + JSON.stringify(mesa));
+
         // validação dos dados recebidos
         if (!usuario || !usuario.email || usuario.email == '') {
             respostaCheckin = {
@@ -31,7 +34,7 @@ var checkinController = function(pool){
             res.json(respostaCheckin);
         } else if (!mesa 
             || !mesa.qrCode || mesa.qrCode == '' 
-            || !mesa.numMesa || mesa.numMesa == '' 
+            || !mesa.nrMesa || mesa.nrMesa == '' 
             || !mesa.codEstabelecimento || mesa.codEstabelecimento == '') {
             respostaCheckin = {
                 isSucesso: false,
@@ -76,7 +79,7 @@ var checkinController = function(pool){
                         isPrimeiroUsuario: false
                     };
                     // desocupando a mesa manualmente
-                    statusMesa = MESA_OCUPADA;
+                    statusMesa = MESA_LIVRE;
 
                     res.status(200);
                     res.json(respostaCheckin);          

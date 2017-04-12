@@ -13,7 +13,7 @@ describe("Check-in", function(){
                 body: {         
                     mesa: {
                         qrCode: '001BARBRAHMA',
-                        numMesa: '001',
+                        nrMesa: '001',
                         codEstabelecimento: 'BARBRAHMA'
                     }
                 }
@@ -89,7 +89,7 @@ describe("Check-in", function(){
                     },
                     mesa: {
                         qrCode: '001BARBRAHMA',
-                        numMesa: '001',
+                        nrMesa: '001',
                         codEstabelecimento: 'BARBRAHMA'
                     }
                 }
@@ -143,7 +143,7 @@ describe("Check-in", function(){
                     },
                     mesa: {
                         qrCode: '001BARBRAHMA',
-                        numMesa: '001',
+                        nrMesa: '001',
                         codEstabelecimento: 'BARBRAHMA'
                     }
                 }
@@ -201,7 +201,7 @@ describe("Check-in", function(){
                     },
                     mesa: {
                         qrCode: '001BARBRAHMAcaue.polimanti@gmail.com',
-                        numMesa: '001',
+                        nrMesa: '001',
                         codEstabelecimento: 'BARBRAHMA'
                     }
                 }
