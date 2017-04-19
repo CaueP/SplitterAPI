@@ -98,7 +98,7 @@ var checkinController = function(pool){
                             isSucesso: false,
                             error: err.error
                     };
-                    res.status(200);
+                    res.status(404);
                     res.json(respostaCheckin);
                 } else {
 
@@ -270,7 +270,7 @@ var checkinController = function(pool){
                                 isSucesso: false
                             };
 
-                            res.status(201);
+                            res.status(304);
                             res.json(respostaCheckin);
                         } else{
                             console.log('resultado atualizarStatusMesa: ', JSON.stringify(results));

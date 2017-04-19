@@ -41,7 +41,7 @@ var userController = function(pool){
                         req.body.contaExistente = true;
                         middlewareConta(req, res, ativarConta);
                     } else {
-                        res.status(404).json('{"error": "ContaNaoCriada"}');
+                        res.status(404).json({error: "ContaNaoCriada"});
                     }                    
                 }
             });
