@@ -22,6 +22,7 @@
     "ejs": "^2.5.5",
     "express": "4.13.x",
     "gulp-mocha": "^3.0.1",
+    "morgan": "^1.8.1",
     "mysql": "^2.13.0",
     "node-mysql": "^0.4.2",
     "should": "^11.1.2",

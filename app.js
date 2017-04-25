@@ -8,6 +8,9 @@ var fs = require('fs');
 // for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
 
+// morgan for logging http requests
+let morgan = require('morgan'); 
+
 // package to parse the body of a request into a JSON object
 var bodyParser = require('body-parser');
 
@@ -23,6 +26,7 @@ var dbCredentials = {
 // create a new express server
 var app = express();
 
+app.use(morgan('dev'));
 
 /*
     setting up the middleware
@@ -79,6 +83,7 @@ initDBConnection();
 // passing mySqlPool connection
 var userRouter = require('./src/routes/userRoutes.js')(mySqlDB);
 var checkinRouter = require('./src/routes/checkinRoutes')(mySqlDB);
+var cardapioRouter = require('./src/routes/cardapioRoutes')(mySqlDB);
 
 // setting the views directory
 app.set('views', './src/views');
@@ -88,9 +93,13 @@ app.set('view engine', 'ejs');
 // using the routes
 app.use('/api/usuario', userRouter);
 app.use('/api/checkin', checkinRouter);
+app.use('/api/cardapio', cardapioRouter);
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
   // print a message when the server starts listening
   console.log("server starting on " + appEnv.url);
 });
+
+// exporting app to be executed on supertest
+module.exports = app;
