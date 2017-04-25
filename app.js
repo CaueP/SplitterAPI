@@ -9,7 +9,7 @@ var fs = require('fs');
 var cfenv = require('cfenv');
 
 // morgan for logging http requests
-let morgan = require('morgan'); 
+var morgan = require('morgan'); 
 
 // package to parse the body of a request into a JSON object
 var bodyParser = require('body-parser');
