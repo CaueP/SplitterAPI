@@ -26,8 +26,6 @@ var dbCredentials = {
 // create a new express server
 var app = express();
 
-app.use(morgan('dev'));
-
 /*
     setting up the middleware
 */
@@ -72,6 +70,7 @@ function initDBConnection() {
         // uri will be in this format: mysql://root:@localhost:3306/splitterdb?reconnect=true
         dbCredentials.uri = getDBCredentialsUrl(fs.readFileSync("vcap-local.json", "utf-8"));
         console.log("Conectando ao DB local");
+        app.use(morgan('dev'));
     }
 
     mySqlDB = mysql.createPool(dbCredentials.uri);
