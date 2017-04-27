@@ -11,5 +11,5 @@ This API is the backend of my [Splitter App for Android](https://github.com/Caue
 - Start application: `npm start`
 
 ## Other commands:
-- Update API Doc: `npm run apidoc`
+- Update API Doc: `npm run apidoc`. (API documentation will be available on the route /apidoc)
 - Run tests: `mocha`
