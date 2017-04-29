@@ -2,7 +2,7 @@ var express = require('express');
 
 var checkinRouter = express.Router();
 
-var router = function (mySqlPool) {
+var router = function(mySqlPool) {
 
     var checkinController = require('../controllers/checkinController')(mySqlPool);
 
@@ -76,7 +76,7 @@ var router = function (mySqlPool) {
          * @apiError UsuarioInvalido O usuário passado é inválido.
          *
          * @apiErrorExample UsuarioInvalido:
-         *     HTTP/1.1 304 Not Modified
+         *     HTTP/1.1 422 Unprocessable Entity
          *     {
          *       "isSucesso": false,
          *       "error": "UsuarioInvalido"
@@ -85,7 +85,7 @@ var router = function (mySqlPool) {
          * @apiError MesaInvalida A mesa escaneada é inválida.
          *
          * @apiErrorExample MesaInvalida:
-         *     HTTP/1.1 304 Not Modified
+         *     HTTP/1.1 422 Unprocessable Entityd
          *     {
          *       "isSucesso": false,
          *       "error": "MesaInvalida"
@@ -104,70 +104,80 @@ var router = function (mySqlPool) {
         .post(checkinController.realizarCheckin)
 
 
-        /**
-         * @api {put} checkin/ Atualizar Status da Mesa
-         * @apiVersion 0.0.1
-         * @apiName atualizarMesa
-         * @apiGroup Check-in
-         *
-         * @apiParam {Object} usuario Objeto usuário
-         * @apiParam {String} email Email do usuário
-         * @apiParam {Object} mesa Objeto mesa
-         * @apiParam {String} qrCode QR Code completo da Mesa        
-         * @apiParam {Number} nrMesa Número da mesa
-         * @apiParam {String} novoStatus Novo status da mesa (livre, ocupado ou manutancao)
-         * @apiParam {String} codEstabelecimento Código do estabelecimento
-         *
-         * @apiSampleRequest /api/checkin/
-         *
-         * @apiParamExample {json} Request-Example:
-         *   {
-         *           "usuario": {
-         *               "email": "ada.lovelace@history.com"
-         *           },
-         *           "mesa": {
-         *               "qrCode": "001TAVERNA",
-         *               "nrMesa": "001",
-         *               "novoStatus": "livre",
-         *               "codEstabelecimento": "TAVERNA"
-         *           }
-         *   }
-         *
-         * @apiSuccess {Bool} isSucesso Indica se a atualização foi bem sucedida
-         *
-         * @apiSuccessExample {json} Mesa atualizada:
-         *     HTTP/1.1 201 OK
-         *   {
-         *       "isSucesso": true
-         *   }
-         *
-         * @apiErrorExample UsuarioInvalido:
-         *     HTTP/1.1 304 Not Modified
-         *     {
-         *       "isSucesso": false,
-         *       "error": "UsuarioInvalido"
-         *     }
-         *
-         * @apiError MesaInvalida A mesa escaneada é inválida.
-         *
-         * @apiErrorExample MesaInvalida:
-         *     HTTP/1.1 304 Not Modified
-         *     {
-         *       "isSucesso": false,
-         *       "error": "MesaInvalida"
-         *     }
-         *
-         * @apiError NovoStatusNaoEncontrado O status da mesa não foi passado.
-         *
-         * @apiErrorExample NovoStatusNaoEncontrado:
-         *     HTTP/1.1 304 Not Modified
-         *     {
-         *       "isSucesso": false,
-         *       "error": "NovoStatusNaoEncontrado"
-         *     }
-         *
-         */
-        .put(checkinController.atualizarStatusMesa)
+    /**
+     * @api {put} checkin/ Atualizar Status da Mesa
+     * @apiVersion 0.0.1
+     * @apiName atualizarMesa
+     * @apiGroup Check-in
+     *
+     * @apiParam {Object} usuario Objeto usuário
+     * @apiParam {String} email Email do usuário
+     * @apiParam {Object} mesa Objeto mesa
+     * @apiParam {String} qrCode QR Code completo da Mesa        
+     * @apiParam {Number} nrMesa Número da mesa
+     * @apiParam {String} novoStatus Novo status da mesa ("Vazio" 0, "Ocupado" 1 ou "Manutencao" 2)
+     * @apiParam {String} codEstabelecimento Código do estabelecimento
+     *
+     * @apiSampleRequest /api/checkin/
+     *
+     * @apiParamExample {json} Request-Example:
+     *   {
+     *           "usuario": {
+     *               "email": "ada.lovelace@history.com"
+     *           },
+     *           "mesa": {
+     *               "qrCode": "001TAVERNA",
+     *               "nrMesa": "001",
+     *               "novoStatus": "Vazio",
+     *               "codEstabelecimento": "TAVERNA"
+     *           }
+     *   }
+     *
+     * @apiSuccess {Bool} isSucesso Indica se a atualização foi bem sucedida
+     *
+     * @apiSuccessExample {json} Mesa atualizada:
+     *     HTTP/1.1 201 OK
+     *   {
+     *       "isSucesso": true,
+     *       "nrNovoStatus": 0
+     *   }
+     *
+     * @apiErrorExample UsuarioInvalido:
+     *     HTTP/1.1 422 Unprocessable Entity
+     *     {
+     *       "isSucesso": false,
+     *       "error": "UsuarioInvalido"
+     *     }
+     *
+     * @apiError MesaInvalida A mesa escaneada é inválida.
+     *
+     * @apiErrorExample MesaInvalida:
+     *     HTTP/1.1 422 Unprocessable Entity
+     *     {
+     *       "isSucesso": false,
+     *       "error": "MesaInvalida"
+     *     }
+     *
+     * @apiError NovoStatusNaoEncontrado O status da mesa não foi passado.
+     *
+     * @apiErrorExample NovoStatusInvalido:
+     *     HTTP/1.1 422 Unprocessable Entity
+     *     {
+     *       "isSucesso": false,
+     *       "error": "NovoStatusNaoEncontrado"
+     *     }
+     *
+     * @apiError ErroDesconhecido Ocorreu um erro desconhecido.
+     *
+     * @apiErrorExample ErroDesconhecido:
+     *     HTTP/1.1 500 Internal Server Error
+     *     {
+     *       "isSucesso": false,
+     *       "error": "ErroDesconhecido"
+     *     }
+     *
+     */
+    .put(checkinController.atualizarStatusMesa)
 
     return checkinRouter;
 };

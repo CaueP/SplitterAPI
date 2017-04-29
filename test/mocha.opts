@@ -1,1 +1,4 @@
+--require chai
+--require chai-http
 --reporter spec
+--ui bdd

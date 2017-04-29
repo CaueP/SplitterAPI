@@ -4,12 +4,12 @@ var chaiHttp = require('chai-http');
 var app = require('../app');
 var should = chai.should();
 
-describe("API Cardapio", function () {
+describe("API Cardapio", function() {
 
     /**
      * Testes de consulta de cardapio
      */
-    describe('Consultar cardapio GET /api/cardapio/:codEstabelecimento', () => {
+    describe('Consultar cardapio existente', () => {
         it('Retorna lista com os itens do cardápio', (done) => {
             var codEstabelecimento = 'BARFRAN';
 
@@ -23,8 +23,8 @@ describe("API Cardapio", function () {
         });
     });
 
-    describe("Consultar cardapio informando estabelecimento inválido", function () {
-        it("Retorna estabelecimento inexistente", function (done) {
+    describe("Consultar cardapio informando estabelecimento inválido", function() {
+        it("Retorna estabelecimento inexistente", function(done) {
             var codEstabelecimento = 'NAOEXISTE';
             chai.request(app)
                 .get('/api/cardapio/' + codEstabelecimento)

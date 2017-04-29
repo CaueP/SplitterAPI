@@ -7,47 +7,22 @@ var should = chai.should();
 chai.use(chaiHttp);
 
 
-describe("API Check-in", function () {
-
-     describe("Realização de Check-in", () => {
-
-        // desocupa a mesa antes de realizar checkin
-        before((done) => {
-            // criando o request
-            var desocupaMesa = {
-                usuario: {
-                    email: 'caue.polimanti@gmail.com'
-                },
-                mesa: {
-                    qrCode: '001BARBRAHMA',
-                    nrMesa: 1,
-                    novoStatus: "Vazio",
-                    codEstabelecimento: 'BARBRAHMA'
-                }
-            };
-            // envia request para desocupar a mesa
-            chai.request(app)
-                .put('/api/checkin')
-                .send(desocupaMesa)
-                .end((err, res) => {
-                    done();
-                });
-        });
-
+describe("API Check-in", function() {
+    describe("Realização de Check-in com dados válidos", () => {
         it("Realização de Check-in sem informação do usuário", (done) => {
             // criando o request
             var checkin = {
                 mesa: {
-                    qrCode: '001BARBRAHMA',
+                    qrCode: '001BARFRAN',
                     nrMesa: 1,
-                    codEstabelecimento: 'BARBRAHMA'
+                    codEstabelecimento: 'BARFRAN'
                 }
             };
             chai.request(app)
                 .post('/api/checkin')
                 .send(checkin)
                 .end((err, res) => {
-                    res.should.have.status(488);
+                    res.should.have.status(422);
                     res.body.should.be.a('object');
                     res.body.should.have.property('isSucesso').eql(false);
                     res.body.should.have.property('error').eql('UsuarioInvalido');
@@ -59,14 +34,14 @@ describe("API Check-in", function () {
             // criando o request
             var checkin = {
                 usuario: {
-                    email: 'caue.polimanti@gmail.com'
+                    email: 'ana_maria@gmail.com'
                 }
             };
             chai.request(app)
                 .post('/api/checkin')
                 .send(checkin)
                 .end((err, res) => {
-                    res.should.have.status(488);
+                    res.should.have.status(422);
                     res.body.should.be.a('object');
                     res.body.should.have.property('isSucesso').eql(false);
                     res.body.should.have.property('error').eql('MesaInvalida');
@@ -77,14 +52,14 @@ describe("API Check-in", function () {
         it("Realização de Check-in com informações de mesa inexistente", (done) => {
             // criando o request
             var checkin = {
-                    usuario: {
-                        email: 'caue.polimanti@gmail.com'
-                    },
-                    mesa: {
-                        qrCode: '001BARINEXISTENTE',
-                        nrMesa: 30,
-                        codEstabelecimento: 'BARINEXISTENTE'
-                    }
+                usuario: {
+                    email: 'ana_maria@gmail.com'
+                },
+                mesa: {
+                    qrCode: '001BARINEXISTENTE',
+                    nrMesa: 30,
+                    codEstabelecimento: 'BARINEXISTENTE'
+                }
             };
             chai.request(app)
                 .post('/api/checkin')
@@ -98,16 +73,46 @@ describe("API Check-in", function () {
                 });
         });
 
-        it("Realização de Check-in com mesa livre", (done) => {
+    });
+
+    describe("Realização de Check-in em mesa livre", () => {
+
+        // desocupa a mesa antes de realizar checkin
+        before((done) => {
+            // criando o request
+            var desocupaMesa = {
+                usuario: {
+                    email: 'ana_maria@gmail.com'
+                },
+                mesa: {
+                    qrCode: '001BARFRAN',
+                    nrMesa: 1,
+                    novoStatus: "Vazio",
+                    codEstabelecimento: 'BARFRAN'
+                }
+            };
+            // envia request para desocupar a mesa
+            chai.request(app)
+                .put('/api/checkin')
+                .send(desocupaMesa)
+                .end((err, res) => {
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('alterado').eql(true);
+                    res.body.should.have.property('nrNovoStatus').eql(0);
+                    done();
+                });
+        });
+
+        it("Com dados válidos", (done) => {
             // criando o request
             var checkin = {
                 usuario: {
-                    email: 'caue.polimanti@gmail.com'
+                    email: 'ana_maria@gmail.com'
                 },
                 mesa: {
-                    qrCode: '001BARBRAHMA',
+                    qrCode: '001BARFRAN',
                     nrMesa: 1,
-                    codEstabelecimento: 'BARBRAHMA'
+                    codEstabelecimento: 'BARFRAN'
                 }
             };
             chai.request(app)
@@ -125,16 +130,47 @@ describe("API Check-in", function () {
                 });
         });
 
-        it("Realização de Check-in com mesa ocupada, com QR code mesa ocupada", (done) => {
+    });
+
+    describe("Realização de Check-in em mesa ocupada", () => {
+        // ocupa a mesa antes de realizar checkin
+        before((done) => {
+            // criando o objeto para ocupar a mesa
+            var ocupaMesa = {
+                usuario: {
+                    email: 'ana_maria@gmail.com'
+                },
+                mesa: {
+                    qrCode: '001BARFRANana_maria@gmail.com',
+                    nrMesa: 1,
+                    novoStatus: "Ocupado",
+                    codEstabelecimento: 'BARFRAN'
+                }
+            };
+            // envia request para desocupar a mesa
+            chai.request(app)
+                .put('/api/checkin')
+                .send(ocupaMesa)
+                .end((err, res) => {
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('alterado').eql(true);
+                    res.body.should.have.property('nrNovoStatus').eql(1);
+                    done();
+                });
+        });
+
+
+
+        it("Com QR code mesa ocupada", (done) => {
             // criando o request
             var checkinOcupado = {
                 usuario: {
-                    email: 'caue.polimanti@gmail.com'
+                    email: 'paulo_paulo@gmail.com'
                 },
                 mesa: {
-                    qrCode: '001BARBRAHMAcaue.polimanti@gmail.com',
+                    qrCode: '001BARFRANana_maria@gmail.com',
                     nrMesa: 1,
-                    codEstabelecimento: 'BARBRAHMA'
+                    codEstabelecimento: 'BARFRAN'
                 }
             };
             chai.request(app)
@@ -143,7 +179,6 @@ describe("API Check-in", function () {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    // "Check-in realizado com sucesso"
                     res.body.should.have.property('isSucesso').eql(true);
                     res.body.should.have.property('comanda');
                     res.body.comanda.should.have.property('codComanda');
@@ -155,16 +190,16 @@ describe("API Check-in", function () {
                 });
         });
 
-        it("Realização de Check-in com mesa ocupada, SEM QR code mesa ocupada", (done) => {
+        it("Sem QR code mesa ocupada", (done) => {
             // criando o request
             var checkinOcupado = {
                 usuario: {
-                    email: 'caue.polimanti@gmail.com'
+                    email: 'paulo_paulo@gmail.com'
                 },
                 mesa: {
-                    qrCode: '001BARBRAHMA',
+                    qrCode: '001BARFRAN',
                     nrMesa: 1,
-                    codEstabelecimento: 'BARBRAHMA'
+                    codEstabelecimento: 'BARFRAN'
                 }
             };
             chai.request(app)

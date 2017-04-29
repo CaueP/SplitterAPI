@@ -20,7 +20,7 @@ var statusMesa; // = MESA_LIVRE;
 var qrCodeOcupado; // = '001BARBRAHMAcaue.polimanti@gmail.com';
 var usuarioResponsavel; // = 'caue.polimanti@gmail.com';
 
-var checkinController = function (pool) {
+var checkinController = function(pool) {
 
     /**
      * Middleware para validar se os valores recebidos sao válidos
@@ -28,7 +28,7 @@ var checkinController = function (pool) {
      * @param {*} res 
      * @param {*} next 
      */
-    var middleware = function (req, res, next) {
+    var middleware = function(req, res, next) {
         var respostaCheckin = {};
 
         // validação dos dados recebidos
@@ -37,7 +37,7 @@ var checkinController = function (pool) {
                 isSucesso: false,
                 error: 'UsuarioInvalido'
             };
-            res.status(488);
+            res.status(422);
             res.json(respostaCheckin);
         } else if (!req.body.mesa ||
             !req.body.mesa.qrCode || req.body.mesa.qrCode == '' ||
@@ -47,7 +47,7 @@ var checkinController = function (pool) {
                 isSucesso: false,
                 error: 'MesaInvalida'
             };
-            res.status(488);
+            res.status(422);
             res.json(respostaCheckin);
         } else {
             console.log("Usuario recebido: " + req.body.usuario.email);
@@ -58,7 +58,7 @@ var checkinController = function (pool) {
 
     }
 
-    var realizarCheckin = function (req, res) {
+    var realizarCheckin = function(req, res) {
         var usuario, mesa;
         var respostaCheckin = {};
 
@@ -68,10 +68,10 @@ var checkinController = function (pool) {
             var mesa = req.body.mesa // informações coletadas pelo qr code da mesa (Estabelecimento e numero da mesa)
 
         async.series([
-                function (callback) {
+                function(callback) {
 
                     // consultar a mesa, para saber se mesa está ocupada
-                    pool.getConnection(function (err, connection) {
+                    pool.getConnection(function(err, connection) {
                         if (err) {
                             console.log(err);
                         }
@@ -79,7 +79,7 @@ var checkinController = function (pool) {
                         var inserts = [mesa.nrMesa, mesa.codEstabelecimento];
                         sql = mysql.format(sql, inserts);
                         // Use the connection 
-                        connection.query(sql, function (err, results, fields) {
+                        connection.query(sql, function(err, results, fields) {
                             connection.release();
                             if (!results[0][0]) {
                                 callback({
@@ -95,7 +95,7 @@ var checkinController = function (pool) {
                 }
 
             ],
-            function (err, results) {
+            function(err, results) {
                 if (err) { // retorna o erro
                     respostaCheckin = {
                         isSucesso: false,
@@ -111,7 +111,7 @@ var checkinController = function (pool) {
                     // se mesa estiver livre, realizar checkin. Cria-se a comanda e retorna flag primeiroUsuario = true
                     if (statusMesa == MESA_LIVRE_STRING) {
                         console.log('Check-in em mesa livre: ');
-                        associarClienteMesa(usuario, mesa, TIPO_DIVISAO_INDIVIDUAL, mesa.qrCode + usuario.email, function (error, resultadoAssociacao) {
+                        associarClienteMesa(usuario, mesa, TIPO_DIVISAO_INDIVIDUAL, mesa.qrCode + usuario.email, function(error, resultadoAssociacao) {
                             if (!err) {
                                 respostaCheckin = {
                                     isSucesso: true,
@@ -138,71 +138,71 @@ var checkinController = function (pool) {
 
                         });
                     } else
-                        // se mesa estiver ocupada, retornar mesa ocupada e informar que é necessário realizar check-in com pessoa x
-                        if (statusMesa == MESA_OCUPADA_STRING) {
+                    // se mesa estiver ocupada, retornar mesa ocupada e informar que é necessário realizar check-in com pessoa x
+                    if (statusMesa == MESA_OCUPADA_STRING) {
 
-                            qrCodeOcupado = results[0].cod_qr_ocupado;
-                            usuarioResponsavel = results[0].txt_email;
+                        qrCodeOcupado = results[0].cod_qr_ocupado;
+                        usuarioResponsavel = results[0].txt_email;
 
-                            // se o codigo do id do usuario dono 
-                            //e é o QR Code sem o id do usuario responsável pela mesa
-                            if (mesa.qrCode == qrCodeOcupado) {
-                                console.log('Check-in em mesa ocupada: ');
-                                associarClienteMesa(usuario, mesa, TIPO_DIVISAO_INDIVIDUAL, mesa.qrCode + usuarioResponsavel, function (error, resultadoAssociacao) {
-                                    if (!err) {
-                                        respostaCheckin = {
-                                            isSucesso: true,
-                                            mesa: {
-                                                nrMesa: mesa.nrMesa,
-                                                usuarioResponsavel: usuarioResponsavel
-                                            },
-                                            comanda: {
-                                                codComanda: resultadoAssociacao.cod_comanda
-                                            },
-                                            isPrimeiroUsuario: false
-                                        };
+                        // se o codigo do id do usuario dono 
+                        //e é o QR Code sem o id do usuario responsável pela mesa
+                        if (mesa.qrCode == qrCodeOcupado) {
+                            console.log('Check-in em mesa ocupada: ');
+                            associarClienteMesa(usuario, mesa, TIPO_DIVISAO_INDIVIDUAL, mesa.qrCode + usuarioResponsavel, function(error, resultadoAssociacao) {
+                                if (!err) {
+                                    respostaCheckin = {
+                                        isSucesso: true,
+                                        mesa: {
+                                            nrMesa: mesa.nrMesa,
+                                            usuarioResponsavel: usuarioResponsavel
+                                        },
+                                        comanda: {
+                                            codComanda: resultadoAssociacao.cod_comanda
+                                        },
+                                        isPrimeiroUsuario: false
+                                    };
 
-                                        res.status(200);
-                                        res.json(respostaCheckin);
-                                    } else {
-                                        respostaCheckin = {
-                                            isSucesso: false,
-                                            error: error
-                                        };
-                                        res.status(404);
-                                        res.json(respostaCheckin);
-                                    }
+                                    res.status(200);
+                                    res.json(respostaCheckin);
+                                } else {
+                                    respostaCheckin = {
+                                        isSucesso: false,
+                                        error: error
+                                    };
+                                    res.status(404);
+                                    res.json(respostaCheckin);
+                                }
 
-                                });
-                            } else {
-                                respostaCheckin = {
-                                    isSucesso: false,
-                                    mesa: {
-                                        nrMesa: mesa.nrMesa,
-                                        usuarioResponsavel: usuarioResponsavel
-                                    },
-                                    isPrimeiroUsuario: false,
-                                    error: 'MesaOcupada'
-                                };
-                                res.status(200);
-                                res.json(respostaCheckin);
-                            };
-
+                            });
                         } else {
                             respostaCheckin = {
                                 isSucesso: false,
-                                error: 'ErroDesconhecido'
+                                mesa: {
+                                    nrMesa: mesa.nrMesa,
+                                    usuarioResponsavel: usuarioResponsavel
+                                },
+                                isPrimeiroUsuario: false,
+                                error: 'MesaOcupada'
                             };
-                            res.status(404);
+                            res.status(200);
                             res.json(respostaCheckin);
-                        }
+                        };
+
+                    } else {
+                        respostaCheckin = {
+                            isSucesso: false,
+                            error: 'ErroDesconhecido'
+                        };
+                        res.status(500);
+                        res.json(respostaCheckin);
+                    }
                 }
             });
     };
 
-    var associarClienteMesa = function (usuario, mesa, tipoDivisao, qrCodeOcupado, callback) {
+    var associarClienteMesa = function(usuario, mesa, tipoDivisao, qrCodeOcupado, callback) {
         console.log(usuario, mesa, tipoDivisao, qrCodeOcupado);
-        pool.getConnection(function (err, connection) {
+        pool.getConnection(function(err, connection) {
             if (err) {
                 console.log(err);
             }
@@ -211,7 +211,7 @@ var checkinController = function (pool) {
             var inserts = [usuario.email, tipoDivisao, qrCodeOcupado, mesa.codEstabelecimento, mesa.nrMesa];
             sql = mysql.format(sql, inserts);
             // Use the connection 
-            connection.query(sql, function (err, results, fields) {
+            connection.query(sql, function(err, results, fields) {
                 connection.release();
                 if (err) {
                     console.log("associarClienteMesa error: " + err);
@@ -233,7 +233,7 @@ var checkinController = function (pool) {
     };
 
 
-    var atualizarStatusMesa = function (req, res) {
+    var atualizarStatusMesa = function(req, res) {
         var usuario, mesa;
         var respostaCheckin = {};
 
@@ -245,9 +245,9 @@ var checkinController = function (pool) {
 
             respostaCheckin = {
                 isSucesso: false,
-                error: "NovoStatusNaoEncontrado"
+                error: "NovoStatusInvalido"
             };
-            res.status(404);
+            res.status(422);
             res.json(respostaCheckin);
         }
         var nrNovoStatus;
@@ -263,7 +263,7 @@ var checkinController = function (pool) {
                 break;
         }
 
-        pool.getConnection(function (err, connection) {
+        pool.getConnection(function(err, connection) {
             if (err) {
                 console.log(err);
             }
@@ -272,13 +272,13 @@ var checkinController = function (pool) {
             var inserts = [mesa.nrMesa, mesa.codEstabelecimento, mesa.qrCode, nrNovoStatus];
             sql = mysql.format(sql, inserts);
             // Use the connection 
-            connection.query(sql, function (err, results, fields) {
+            connection.query(sql, function(err, results, fields) {
                 if (err) console.log("error: " + err);
                 connection.release();
 
                 if (err) {
                     respostaCheckin = {
-                        isSucesso: false
+                        alterado: false
                     };
 
                     res.status(304);
@@ -286,9 +286,10 @@ var checkinController = function (pool) {
                 } else {
                     console.log('resultado atualizarStatusMesa: ', JSON.stringify(results));
                     respostaCheckin = {
-                        isSucesso: true
+                        alterado: true,
+                        nrNovoStatus: nrNovoStatus
                     };
-
+                    console.log(respostaCheckin);
                     res.status(201);
                     res.json(respostaCheckin);
                 }
