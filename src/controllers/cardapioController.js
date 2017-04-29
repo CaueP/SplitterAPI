@@ -26,7 +26,7 @@ var cardapioController = function (pool) {
                         // console.log('resultado da query: ');
                         // console.log(JSON.stringify(results));
                         // resposta sucesso
-                        resposta.cardapio = results[0];
+                        resposta = results[0];
                         res.status(200);
                     }
                     

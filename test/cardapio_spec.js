@@ -1,34 +1,38 @@
-var assert = require('assert');
-var should = require('should');
-var sinon = require('sinon');
-request = require('supertest'),
-app = require('../app.js');
-// agent executes HTTP calls on our app
-var agent = request.agent(app);
+// test libs
+var chai = require('chai');
+var chaiHttp = require('chai-http');
+var app = require('../app');
+var should = chai.should();
 
-describe("Cardapio", function () {
-    describe("Consultar cardapio informando estabelecimento válido", function () {
-        it("Retorna lista com os itens do cardápio", function (done) {
+describe("API Cardapio", function () {
+
+    /**
+     * Testes de consulta de cardapio
+     */
+    describe('Consultar cardapio GET /api/cardapio/:codEstabelecimento', () => {
+        it('Retorna lista com os itens do cardápio', (done) => {
             var codEstabelecimento = 'BARFRAN';
 
-            agent.get('/api/cardapio/' + codEstabelecimento)
-                .expect(200)
-                .end(function (err, results) {
-                    results.body.should.have.property('cardapio');
+            chai.request(app)
+                .get('/api/cardapio/' + codEstabelecimento)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
                     done();
-                });
+                })
         });
     });
 
     describe("Consultar cardapio informando estabelecimento inválido", function () {
         it("Retorna estabelecimento inexistente", function (done) {
             var codEstabelecimento = 'NAOEXISTE';
-            agent.get('/api/cardapio/' + codEstabelecimento)
-                .expect(404)
-                .end(function (err, results) {
-                    results.body.estabEncontrado.should.equal(false);
+            chai.request(app)
+                .get('/api/cardapio/' + codEstabelecimento)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    res.body.should.have.property('estabEncontrado').eql(false);
                     done();
-                });
+                })
         });
     });
 });
