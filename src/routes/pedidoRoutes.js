@@ -32,7 +32,7 @@ var router = function () {
          * @apiSuccess {Number} codPedido Código do pedido realizado
          *
          * @apiSuccessExample {json} Pedido Realizado:
-         *     HTTP/1.1 201 OK
+         *     HTTP/1.1 201 Created
          *   {
          *           "codPedido": 3
          *   }
@@ -40,9 +40,17 @@ var router = function () {
          * @apiError ParametrosInvalidos Os parâmetros passados são inválidos.
          *
          * @apiErrorExample ParametrosInvalidos:
-         *     HTTP/1.1 200 Not Modified
+         *     HTTP/1.1 422 Unprocessable Entity 
          *     {
          *       "error": "ParametrosInvalidos"
+         *     }
+         *
+         * @apiError ParametroNaoEncontrado Algum dos parâmetros passados não foram encontrados no BD.
+         *
+         * @apiErrorExample ParametroNaoEncontrado:
+         *     HTTP/1.1 422 Unprocessable Entity 
+         *     {
+         *       "error": "ParametroNaoEncontrado"
          *     }
          *
          */

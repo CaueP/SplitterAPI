@@ -25,7 +25,7 @@ describe('Pedido', () => {
                 .post('/api/pedido')
                 .send(pedido)
                 .end((err, res) => {
-                    res.should.have.status(200);
+                    res.should.have.status(422);
                     res.body.should.be.a('object');
                     res.body.should.have.property('error').eql('ParametrosInvalidos');
                     done();
@@ -49,7 +49,7 @@ describe('Pedido', () => {
                 .end((err, res) => {
                     res.should.have.status(201);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('numPedido');
+                    res.body.should.have.property('codPedido');
                     done();
                 });
         });
