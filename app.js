@@ -32,7 +32,7 @@ app.use(bodyParser.json()); // parse application/json (parse the body into req.b
 app.use(bodyParser.urlencoded({
     extended: true
 })); // parse application/x-www-form-urlencoded (parse the body into req.body for url encoded)
-app.use(expressValidator());
+app.use(expressValidator()); // this line must be immediately after any of the bodyParser middlewares!
 
 /*MySql connection*/
 // configuring the MySQL DB
@@ -114,10 +114,11 @@ app.use('/api/cardapio', cardapioRouter);
 app.use('/api/pedido', pedidoRouter);
 
 // start server on the specified port and binding host
-app.listen(appEnv.port, '0.0.0.0', function () {
-    // print a message when the server starts listening
-    console.log("server starting on " + appEnv.url);
-});
-
+if (!module.parent) { // checking if a parent already exists, so it doesn't create another one (for testing)
+    app.listen(appEnv.port, '0.0.0.0', function () {
+        // print a message when the server starts listening
+        console.log("server starting on " + appEnv.url);
+    });
+}
 // exporting app to be executed on supertest
 module.exports = app;
