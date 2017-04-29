@@ -31,16 +31,13 @@ var checkinController = function (pool) {
     var middleware = function (req, res, next) {
         var respostaCheckin = {};
 
-        console.log("Usuario recebido: " + JSON.stringify(req.body.usuario));
-        console.log("Mesa recebida: " + JSON.stringify(req.body.mesa));
-
         // validação dos dados recebidos
         if (!req.body.usuario || !req.body.usuario.email || req.body.usuario.email == '') {
             respostaCheckin = {
                 isSucesso: false,
                 error: 'UsuarioInvalido'
             };
-            res.status(400);
+            res.status(488);
             res.json(respostaCheckin);
         } else if (!req.body.mesa ||
             !req.body.mesa.qrCode || req.body.mesa.qrCode == '' ||
@@ -50,9 +47,12 @@ var checkinController = function (pool) {
                 isSucesso: false,
                 error: 'MesaInvalida'
             };
-            res.status(400);
+            res.status(488);
             res.json(respostaCheckin);
         } else {
+            console.log("Usuario recebido: " + req.body.usuario.email);
+            console.log("Mesa recebida: ");
+            console.log(req.body.mesa);
             next();
         }
 
@@ -86,7 +86,7 @@ var checkinController = function (pool) {
                                     error: 'MesaNaoEncontrada'
                                 }, null);
                             } else {
-                                console.log('resultado da query: ', JSON.stringify(results));
+                                console.log('resultado da consulta status mesa: ', results[0][0].dsc_ind_status_mesa);
                                 callback(null, results[0][0]);
                             }
 
@@ -108,11 +108,9 @@ var checkinController = function (pool) {
                     // pega status da mesa
                     statusMesa = results[0].dsc_ind_status_mesa;
 
-                    console.log(statusMesa);
-
                     // se mesa estiver livre, realizar checkin. Cria-se a comanda e retorna flag primeiroUsuario = true
                     if (statusMesa == MESA_LIVRE_STRING) {
-
+                        console.log('Check-in em mesa livre: ');
                         associarClienteMesa(usuario, mesa, TIPO_DIVISAO_INDIVIDUAL, mesa.qrCode + usuario.email, function (error, resultadoAssociacao) {
                             if (!err) {
                                 respostaCheckin = {
@@ -149,7 +147,7 @@ var checkinController = function (pool) {
                             // se o codigo do id do usuario dono 
                             //e é o QR Code sem o id do usuario responsável pela mesa
                             if (mesa.qrCode == qrCodeOcupado) {
-
+                                console.log('Check-in em mesa ocupada: ');
                                 associarClienteMesa(usuario, mesa, TIPO_DIVISAO_INDIVIDUAL, mesa.qrCode + usuarioResponsavel, function (error, resultadoAssociacao) {
                                     if (!err) {
                                         respostaCheckin = {
@@ -219,7 +217,7 @@ var checkinController = function (pool) {
                     console.log("associarClienteMesa error: " + err);
                     return callback(err, null);
                 } else {
-                    console.log('Resultado associarClienteMesa: ', JSON.stringify(results));
+                    console.log('Resultado associarClienteMesa: ');
                     console.log(results[0][0])
                     return callback(null, results[0][0]);
                 }
