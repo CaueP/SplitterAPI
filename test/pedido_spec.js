@@ -6,7 +6,7 @@ var should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('Pedido', () => {
+describe('API Pedido', () => {
 
     /**
      * Testes de realização de pedido
@@ -59,14 +59,14 @@ describe('Pedido', () => {
      * Testes de consulta de pedido 
      */
     describe('Consultar pedidos GET /pedido/:codEstabelecimento/:codComanda', () => {
-        it.skip('Deve retornar um erro', (done) => {
+        it('Passando parametros invalidos - deve retornar erro', (done) => {
             var codEstabelecimento = 'BARFRAN';
-            var codComanda = 1;
+            var codComanda = 'dsada';
 
             chai.request(app)
                 .get('/api/pedido/' + codEstabelecimento + '/' + codComanda)
                 .end((err, res) => {
-                    res.should.have.status(200);
+                    res.should.have.status(422);
                     res.body.should.be.a('object');
                     res.body.should.have.property('error').eql('ParametrosInvalidos');
                     done();
@@ -82,7 +82,6 @@ describe('Pedido', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
-                    res.body.length.should.be.eql(1)
                     done();
                 })
         });

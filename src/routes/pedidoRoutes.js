@@ -91,6 +91,23 @@ var router = function () {
          *          "val_pedido": 27.5,
          *          "cod_status_pedido": 0
          *    ]
+         * 
+         * @apiError ParametrosInvalidos Os parâmetros passados são inválidos.
+         *
+         * @apiErrorExample ParametrosInvalidos:
+         *     HTTP/1.1 422 Unprocessable Entity 
+         *     {
+         *       "error": "ParametrosInvalidos"
+         *     }
+         *
+         * @apiError ParametroNaoEncontrado Algum dos parâmetros passados não foram encontrados no BD.
+         *
+         * @apiErrorExample ParametroNaoEncontrado:
+         *     HTTP/1.1 422 Unprocessable Entity 
+         *     {
+         *       "error": "ParametroNaoEncontrado"
+         *     }
+         *
          */
         .get(pedidoController.consultarPedidos);
 
