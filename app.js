@@ -83,6 +83,7 @@ initDBConnection();
 var userRouter = require('./src/routes/userRoutes.js')(mySqlDB);
 var checkinRouter = require('./src/routes/checkinRoutes')(mySqlDB);
 var cardapioRouter = require('./src/routes/cardapioRoutes')(mySqlDB);
+var pedidoRouter = require('./src/routes/pedidoRoutes')();
 
 // setting the views directory
 app.set('views', './src/views');
@@ -93,6 +94,7 @@ app.set('view engine', 'ejs');
 app.use('/api/usuario', userRouter);
 app.use('/api/checkin', checkinRouter);
 app.use('/api/cardapio', cardapioRouter);
+app.use('/api/pedido', pedidoRouter);
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
