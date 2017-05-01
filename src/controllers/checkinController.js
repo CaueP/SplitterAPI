@@ -116,6 +116,7 @@ var checkinController = function(pool) {
                                 respostaCheckin = {
                                     isSucesso: true,
                                     mesa: {
+                                        codEstabelecimento: mesa.codEstabelecimento,
                                         nrMesa: mesa.nrMesa,
                                         qrCodeOcupado: mesa.qrCode + usuario.email
                                     },
@@ -153,6 +154,7 @@ var checkinController = function(pool) {
                                     respostaCheckin = {
                                         isSucesso: true,
                                         mesa: {
+                                            codEstabelecimento: mesa.codEstabelecimento,
                                             nrMesa: mesa.nrMesa,
                                             usuarioResponsavel: usuarioResponsavel
                                         },

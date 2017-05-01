@@ -38,6 +38,7 @@ var router = function(mySqlPool) {
          *
          * @apiSuccess {Bool} isSucesso Indica se o check-in foi bem sucedido
          * @apiSuccess {Object} mesa Objeto mesa
+         * @apiParam {String} codEstabelecimento Código do estabelecimento
          * @apiSuccess {String} qrCodeOcupado QR Code criado para quando é o primeiro usuário
          * @apiSuccess {String} nrMesa Número da mesa
          * @apiSuccess {String} usuarioResponsavel Usuário responsável pela mesa
@@ -50,6 +51,7 @@ var router = function(mySqlPool) {
          *   {
          *           "isSucesso": true,
          *           "mesa": {
+         *               "codEstabelecimento": "TAVERNA",
          *               "nrMesa": 3,
          *               "qrCodeOcupado": "001TAVERNAada.lovelace@history.com"
          *           },

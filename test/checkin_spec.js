@@ -123,6 +123,7 @@ describe("API Check-in", function() {
                     res.body.should.be.a('object');
                     res.body.should.have.property('isSucesso').eql(true);
                     res.body.should.have.property('mesa');
+                    res.body.mesa.should.have.property('codEstabelecimento');
                     res.body.mesa.should.have.property('qrCodeOcupado');
                     res.body.mesa.should.have.property('nrMesa');
                     res.body.should.have.property('isPrimeiroUsuario').eql(true);
@@ -182,6 +183,7 @@ describe("API Check-in", function() {
                     res.body.should.have.property('isSucesso').eql(true);
                     res.body.should.have.property('comanda');
                     res.body.comanda.should.have.property('codComanda');
+                    res.body.mesa.should.have.property('codEstabelecimento');
                     res.body.mesa.should.have.property('nrMesa');
                     res.body.mesa.should.have.property('usuarioResponsavel');
                     res.body.should.have.property('mesa');
