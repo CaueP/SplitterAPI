@@ -43,7 +43,7 @@ var router = function(mySqlPool) {
          * @apiSuccess {String} nrMesa Número da mesa
          * @apiSuccess {String} usuarioResponsavel Usuário responsável pela mesa
          * @apiSuccess {Object} comanda Objeto Comanda
-         * @apiSuccess {Number} codComanda Código da comanda gerada para o usuário
+         * @apiSuccess {Number} cod_comanda Código da comanda gerada para o usuário
          * @apiSuccess {Bool} isPrimeiroUsuario Indica se é o primeiro usuário à realizar check-in
          *
          * @apiSuccessExample {json} Mesa Livre:
@@ -56,7 +56,7 @@ var router = function(mySqlPool) {
          *               "qrCodeOcupado": "001TAVERNAada.lovelace@history.com"
          *           },
          *           "comanda": {
-         *               "codComanda": 1
+         *               "cod_comanda": 1
          *           },
          *           "isPrimeiroUsuario": true
          *   }
@@ -70,7 +70,7 @@ var router = function(mySqlPool) {
          *               "usuarioResponsavel": "ada.lovelace@history.com"
          *           },
          *           "comanda": {
-         *               "codComanda": 2
+         *               "cod_comanda": 2
          *           },
          *           "isPrimeiroUsuario": false
          *   }

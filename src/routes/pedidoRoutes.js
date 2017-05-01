@@ -2,7 +2,7 @@ var express = require('express');
 
 pedidoRouter = express.Router();
 
-var router = function () {
+var router = function() {
 
     var pedidoController = require('../controllers/pedidoController')();
 
@@ -14,19 +14,19 @@ var router = function () {
          * @apiGroup Pedido
          *
          * @apiParam {String} codEstabelecimento Código do estabelecimento
-         * @apiParam {Number} codComanda Código da comanda
-         * @apiParam {Number} codProduto Código do produto
-         * @apiParam {Number} qtdProduto Quantidade do produto
-         * @apiParam {String} descObservacao Observação do pedido para a preparação
+         * @apiParam {Number} cod_comanda Código da comanda
+         * @apiParam {Number} cod_produto Código do produto
+         * @apiParam {Number} qtd_produto Quantidade do produto
+         * @apiParam {String} txt_observacao Observação do pedido para a preparação
          * @apiSampleRequest /api/pedido/
          *
          * @apiParamExample {json} Request-Example:
          *   {
          *           "codEstabelecimento": "TAVERNA",
-         *           "codComanda": 1,
-         *           "codProduto": 6,
-         *           "qtdProduto": 2,
-         *           "descObservacao": "Sem açúcar"
+         *           "cod_comanda": 1,
+         *           "cod_produto": 6,
+         *           "qtd_produto": 2,
+         *           "txt_observacao": "Sem açúcar"
          *   }
          *
          * @apiSuccess {Number} codPedido Código do pedido realizado
@@ -34,7 +34,7 @@ var router = function () {
          * @apiSuccessExample {json} Pedido Realizado:
          *     HTTP/1.1 201 Created
          *   {
-         *           "codPedido": 3
+         *           "cod_pedido": 3
          *   }
          *
          * @apiError ParametrosInvalidos Os parâmetros passados são inválidos.
@@ -56,9 +56,9 @@ var router = function () {
          */
         .post(pedidoController.realizarPedido);
 
-    pedidoRouter.route('/:codEstabelecimento/:codComanda')
+    pedidoRouter.route('/:codEstabelecimento/:cod_comanda')
         /**
-         * @api {get} pedido/:codEstabelecimento/:codComanda Buscar pedidos
+         * @api {get} pedido/:codEstabelecimento/:cod_comanda Buscar pedidos
          * @apiVersion 0.0.1
          * @apiName GetPedidos
          * @apiGroup Pedido

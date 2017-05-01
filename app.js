@@ -115,7 +115,7 @@ app.use('/api/pedido', pedidoRouter);
 
 // start server on the specified port and binding host
 if (!module.parent) { // checking if a parent already exists, so it doesn't create another one (for testing)
-    app.listen(appEnv.port, '0.0.0.0', function () {
+    app.listen(appEnv.port, '0.0.0.0', function() {
         // print a message when the server starts listening
         console.log("server starting on " + appEnv.url);
     });

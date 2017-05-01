@@ -1,19 +1,19 @@
-var pedidoController = function () {
+var pedidoController = function() {
 
     /**
      * Função para realizar um pedido
      * @param {*} req 
      * @param {*} res 
      */
-    var realizarPedido = function (req, res, next) {
+    var realizarPedido = function(req, res, next) {
         var resposta;
 
         // verificando se todos os parametros foram recebidos
         req.assert('codEstabelecimento', 'CodEstabelecimento é obrigatório').notEmpty().isAlpha();
-        req.assert('codComanda', 'codComanda é obrigatório').notEmpty().isInt();
-        req.assert('codProduto', 'codProduto é obrigatório').notEmpty();
-        req.assert('qtdProduto', 'qtdProduto é obrigatório').notEmpty();
-        req.assert('descObservacao', 'descObservacao é obrigatório');
+        req.assert('cod_comanda', 'cod_comanda é obrigatório').notEmpty().isInt();
+        req.assert('cod_produto', 'cod_produto é obrigatório').notEmpty();
+        req.assert('qtd_produto', 'qtd_produto é obrigatório').notEmpty();
+        req.assert('txt_observacao', 'txt_observacao é obrigatório');
 
         // validação dos erros verificados
         var errors = req.validationErrors();
@@ -27,21 +27,21 @@ var pedidoController = function () {
         }
         // dados para o insert
         var codEstabelecimento = req.body.codEstabelecimento,
-            codComanda = req.body.codComanda,
-            codProduto = req.body.codProduto,
-            qtdProduto = req.body.qtdProduto,
-            descObservacao = req.body.descObservacao;
+            cod_comanda = req.body.cod_comanda,
+            cod_produto = req.body.cod_produto,
+            qtd_produto = req.body.qtd_produto,
+            txt_observacao = req.body.txt_observacao;
 
         // obtem conexao com o DB
-        req.getConnection(function (err, conn) {
+        req.getConnection(function(err, conn) {
             if (err) {
                 console.log("Nao foi possivel conectar ao Banco de Dados");
                 console.log(err);
                 return next("ErroConexaoBD");
             }
             // envia a query ao DB
-            var query = conn.query('CALL pr_realizar_pedido(?, ?, ?, ?, ?);', [codEstabelecimento, codComanda, codProduto, qtdProduto, descObservacao],
-                function (err, rows) {
+            var query = conn.query('CALL pr_realizar_pedido(?, ?, ?, ?, ?);', [codEstabelecimento, cod_comanda, cod_produto, qtd_produto, txt_observacao],
+                function(err, rows) {
                     if (err) {
                         console.log(err);
                         resposta = {
@@ -55,7 +55,7 @@ var pedidoController = function () {
                         console.log("Codigo do pedido realizado:", rows[0][0].cod_pedido);
                         res.status(201);
                         res.json({
-                            codPedido: rows[0][0].cod_pedido
+                            cod_pedido: rows[0][0].cod_pedido
                         });
                     }
                 });
@@ -67,12 +67,12 @@ var pedidoController = function () {
      * @param {*} req 
      * @param {*} res 
      */
-    var consultarPedidos = function (req, res) {
+    var consultarPedidos = function(req, res) {
         var resposta;
 
         // verificando se todos os parametros foram recebidos
         req.assert('codEstabelecimento', 'CodEstabelecimento é obrigatório').notEmpty().isAlpha();
-        req.assert('codComanda', 'codComanda é obrigatório').notEmpty().isInt();
+        req.assert('cod_comanda', 'cod_comanda é obrigatório').notEmpty().isInt();
 
         // validação dos erros verificados
         var errors = req.validationErrors();
@@ -87,18 +87,18 @@ var pedidoController = function () {
 
         // dados para a busca
         var codEstabelecimento = req.params.codEstabelecimento,
-            codComanda = req.params.codComanda;
+            cod_comanda = req.params.cod_comanda;
 
         // obtem conexao com o DB
-        req.getConnection(function (err, conn) {
+        req.getConnection(function(err, conn) {
             if (err) {
                 console.log("Nao foi possivel conectar ao Banco de Dados");
                 console.log(err);
                 return next("ErroConexaoBD");
             }
             // envia a query ao DB
-            var query = conn.query('CALL pr_consultar_pedido(?, ?);', [codEstabelecimento, codComanda],
-                function (err, rows) {
+            var query = conn.query('CALL pr_consultar_pedido(?, ?);', [codEstabelecimento, cod_comanda],
+                function(err, rows) {
                     if (err) {
                         console.log(err);
                         resposta = {

@@ -121,7 +121,7 @@ var checkinController = function(pool) {
                                         qrCodeOcupado: mesa.qrCode + usuario.email
                                     },
                                     comanda: {
-                                        codComanda: resultadoAssociacao.cod_comanda
+                                        cod_comanda: resultadoAssociacao.cod_comanda
                                     },
                                     isPrimeiroUsuario: true
                                 }
@@ -159,7 +159,7 @@ var checkinController = function(pool) {
                                             usuarioResponsavel: usuarioResponsavel
                                         },
                                         comanda: {
-                                            codComanda: resultadoAssociacao.cod_comanda
+                                            cod_comanda: resultadoAssociacao.cod_comanda
                                         },
                                         isPrimeiroUsuario: false
                                     };

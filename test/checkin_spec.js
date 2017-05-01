@@ -182,7 +182,7 @@ describe("API Check-in", function() {
                     res.body.should.be.a('object');
                     res.body.should.have.property('isSucesso').eql(true);
                     res.body.should.have.property('comanda');
-                    res.body.comanda.should.have.property('codComanda');
+                    res.body.comanda.should.have.property('cod_comanda');
                     res.body.mesa.should.have.property('codEstabelecimento');
                     res.body.mesa.should.have.property('nrMesa');
                     res.body.mesa.should.have.property('usuarioResponsavel');
