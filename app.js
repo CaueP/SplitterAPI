@@ -106,12 +106,14 @@ var userRouter = require('./src/routes/userRoutes.js')(mySqlDB);
 var checkinRouter = require('./src/routes/checkinRoutes')(mySqlDB);
 var cardapioRouter = require('./src/routes/cardapioRoutes')(mySqlDB);
 var pedidoRouter = require('./src/routes/pedidoRoutes')();
+var adminRouter = require('./src/routes/adminRoutes')(dbCredentials.uri);
 
 // using the routes
 app.use('/api/usuario', userRouter);
 app.use('/api/checkin', checkinRouter);
 app.use('/api/cardapio', cardapioRouter);
 app.use('/api/pedido', pedidoRouter);
+app.use('/api/admin', adminRouter);
 
 // start server on the specified port and binding host
 if (!module.parent) { // checking if a parent already exists, so it doesn't create another one (for testing)
@@ -120,5 +122,5 @@ if (!module.parent) { // checking if a parent already exists, so it doesn't crea
         console.log("server starting on " + appEnv.url);
     });
 }
-// exporting app to be executed on supertest
+// exporting app to be executed on test
 module.exports = app;
