@@ -4,7 +4,7 @@ var adminRouter = express.Router();
 
 var routes = function(dbConfig) {
 
-    console.log(__dirname);
+    //console.log(__dirname);
     adminRouter.route('/initDb')
         .get(function(req, res) {
             var execsql = require('execsql'),
