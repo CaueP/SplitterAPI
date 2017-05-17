@@ -37,7 +37,7 @@ describe('API Pedido', () => {
             // pedido a ser enviado
             var pedido = {
                 codEstabelecimento: 'BARFRAN',
-                cod_comanda: 19,
+                cod_comanda: 1,
                 cod_produto: 6,
                 qtd_produto: 1,
                 txt_observacao: "Sem sal"

@@ -107,6 +107,7 @@ var checkinRouter = require('./src/routes/checkinRoutes')(mySqlDB);
 var cardapioRouter = require('./src/routes/cardapioRoutes')(mySqlDB);
 var pedidoRouter = require('./src/routes/pedidoRoutes')();
 var adminRouter = require('./src/routes/adminRoutes')(dbCredentials.uri);
+var contaRouter = require('./src/routes/contaRoutes')();
 
 // using the routes
 app.use('/api/usuario', userRouter);
@@ -114,6 +115,7 @@ app.use('/api/checkin', checkinRouter);
 app.use('/api/cardapio', cardapioRouter);
 app.use('/api/pedido', pedidoRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/conta', contaRouter);
 
 // start server on the specified port and binding host
 if (!module.parent) { // checking if a parent already exists, so it doesn't create another one (for testing)
