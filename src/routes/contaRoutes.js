@@ -62,8 +62,10 @@ var router = function () {
          *     }
          *
          */
-        .get(contaController.consultarConta)
-        .post(contaController.fecharConta);
+        .get(contaController.consultarConta);
+
+    contaRouter.route('/:codEstabelecimento/:nrMesa/:cod_comanda')
+        .get(contaController.fecharConta);
 
     return contaRouter;
 };

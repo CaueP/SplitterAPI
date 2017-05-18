@@ -18,7 +18,7 @@ describe('API Conta', () => {
             chai.request(app)
                 .get('/api/conta/' + codEstabelecimento + '/' + codComanda)
                 .end((err, res) => {
-                   res.should.have.status(404);
+                    res.should.have.status(404);
                     res.body.should.be.a('object');
                     res.body.should.have.property('error').eql('ParametrosInvalidos');
                     done();
@@ -58,4 +58,23 @@ describe('API Conta', () => {
         });
     });
 
+    describe('Teste de Fechamento de Conta', () => {
+        it('Deve retornar a lista com os pedidos na conta e o total', (done) => {
+            var codEstabelecimento = 'BARFRAN';
+            var nrMesa = 1;
+            var codComanda = 1;
+
+            chai.request(app)
+                .get('/api/conta/' + codEstabelecimento + '/' + nrMesa + '/' + codComanda)
+                .end((err, res) => {
+                    res.should.have.status(201);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('total');
+                    res.body.total.should.be.a('number');
+                    res.body.should.have.property('pedidos');
+                    res.body.pedidos.should.be.a('array');
+                    done();
+                });
+        });
+    });
 });

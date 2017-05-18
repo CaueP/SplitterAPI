@@ -79,14 +79,58 @@ var pedidoController = function () {
         var total = 0;
         for (var i = 0, len = pedidos.length; i < len; i++) {
             // console.log(pedidos[i]);
-             // TODO: val_pedido deve ser alterado para o valor do pedido referente a parte do cliente
+            // TODO: val_pedido deve ser alterado para o valor do pedido referente a parte do cliente
             total = total + pedidos[i].val_pedido;
         }
         return cb(null, total);
     }
 
-    var fecharConta = function(req, res) {
+    /**
+     * Função para registrar o fechamento da comanda
+     * @param {*} req 
+     * @param {*} res 
+     */
+    var fecharConta = function (req, res) {
+        var resposta;
 
+        // verificando se todos os parametros foram recebidos
+        req.assert('codEstabelecimento', 'CodEstabelecimento é obrigatório').notEmpty().isAlpha();
+        req.assert('nrMesa', 'nrMesa é obrigatório').notEmpty().isInt();
+        req.assert('cod_comanda', 'cod_comanda é obrigatório').notEmpty().isInt();
+
+        // validação dos erros verificados
+        var errors = req.validationErrors();
+        if (errors) {
+            resposta = {
+                error: 'ParametrosInvalidos'
+            };
+            res.status(422);
+            res.json(resposta);
+            return;
+        }
+
+        // parametros para a procedure
+        var codEstabelecimento = req.params.codEstabelecimento,
+            cod_comanda = req.params.cod_comanda,
+            nrMesa = req.params.nrMesa;
+
+        // TODO: Realizar chamada ao banco
+
+        resposta = {
+            total: 100.10,
+            pedidos: [
+                {
+                    nome: "Vinho Branco",
+                    val_pedido: 50.05
+                },
+                {
+                    nome: "Whisk",
+                    val_pedido: 50.05
+                }
+            ]
+        }
+        res.status(201);
+        res.json(resposta);
     }
 
     return {
