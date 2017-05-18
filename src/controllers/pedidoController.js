@@ -35,15 +35,15 @@ var pedidoController = function() {
         // obtem conexao com o DB
         req.getConnection(function(err, conn) {
             if (err) {
-                console.log("Nao foi possivel conectar ao Banco de Dados");
-                console.log(err);
+                //console.log("Nao foi possivel conectar ao Banco de Dados");
+                //console.log(err);
                 return next("ErroConexaoBD");
             }
             // envia a query ao DB
             var query = conn.query('CALL pr_realizar_pedido(?, ?, ?, ?, ?);', [codEstabelecimento, cod_comanda, cod_produto, qtd_produto, txt_observacao],
                 function(err, rows) {
                     if (err) {
-                        console.log(err);
+                        //console.log(err);
                         resposta = {
                             error: 'ParametroNaoEncontrado'
                         };
@@ -52,7 +52,7 @@ var pedidoController = function() {
                         return;
                     }
                     if (rows[0][0]) { // valida se recebeu a resposta
-                        console.log("Codigo do pedido realizado:", rows[0][0].cod_pedido);
+                        //console.log("Codigo do pedido realizado:", rows[0][0].cod_pedido);
                         res.status(201);
                         res.json({
                             cod_pedido: rows[0][0].cod_pedido
@@ -92,15 +92,15 @@ var pedidoController = function() {
         // obtem conexao com o DB
         req.getConnection(function(err, conn) {
             if (err) {
-                console.log("Nao foi possivel conectar ao Banco de Dados");
-                console.log(err);
+                //console.log("Nao foi possivel conectar ao Banco de Dados");
+                //console.log(err);
                 return next("ErroConexaoBD");
             }
             // envia a query ao DB
             var query = conn.query('CALL pr_consultar_pedido(?, ?);', [codEstabelecimento, cod_comanda],
                 function(err, rows) {
                     if (err) {
-                        console.log(err);
+                        //console.log(err);
                         resposta = {
                             error: 'ParametroNaoEncontrado'
                         };
@@ -108,7 +108,7 @@ var pedidoController = function() {
                         res.json(resposta);
                         return;
                     }
-                    console.log("Pedidos encontrados:", rows.length);
+                    //console.log("Pedidos encontrados:", rows.length);
                     resposta = rows[0];
                     res.status(200);
                     res.json(resposta);
