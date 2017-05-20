@@ -6,7 +6,7 @@ var should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('API Pedido', () => {
+describe('CSU04 - API Pedido', () => {
 
     /**
      * Testes de realização de pedido

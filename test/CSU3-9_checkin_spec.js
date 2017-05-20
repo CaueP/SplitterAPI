@@ -7,7 +7,7 @@ var should = chai.should();
 chai.use(chaiHttp);
 
 
-describe("API Check-in", function() {
+describe("CSU3 - API Check-in", function() {
     describe("Realização de Check-in com dados válidos", () => {
         it("Realização de Check-in sem informação do usuário", (done) => {
             // criando o request
