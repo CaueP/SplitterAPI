@@ -7,7 +7,7 @@ var should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('API Conta', () => {
+describe('CSU07/08 - API Conta', () => {
 
     describe('Teste de Consulta de Conta', () => {
 

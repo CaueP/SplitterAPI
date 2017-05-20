@@ -4,7 +4,7 @@ var chaiHttp = require('chai-http');
 var app = require('../app');
 var should = chai.should();
 
-describe("API Cardapio", function() {
+describe("CSU5 - API Cardapio", function() {
 
     /**
      * Testes de consulta de cardapio
