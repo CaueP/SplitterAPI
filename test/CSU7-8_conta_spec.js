@@ -11,7 +11,7 @@ describe('CSU07/08 - API Conta', () => {
 
     describe('Teste de Consulta de Conta', () => {
 
-        it.skip('Estabelecimento inexistente deve retornar um erro', (done) => {
+        it.skip('Código de Estabelecimento inexistente deve retornar um erro', (done) => {
             var codEstabelecimento = 'NAOEXISTE';
             var codComanda = 1;
 
@@ -19,6 +19,48 @@ describe('CSU07/08 - API Conta', () => {
                 .get('/api/conta/' + codEstabelecimento + '/' + codComanda)
                 .end((err, res) => {
                     res.should.have.status(404);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('error').eql('ParametrosInvalidos');
+                    done();
+                });
+        });
+
+        it('Código de Estabelecimento com número deve retornar um erro', (done) => {
+            var codEstabelecimento = 21321321;
+            var codComanda = 1;
+
+            chai.request(app)
+                .get('/api/conta/' + codEstabelecimento + '/' + codComanda)
+                .end((err, res) => {
+                    res.should.have.status(422);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('error').eql('ParametrosInvalidos');
+                    done();
+                });
+        });
+
+        it('Código de Estabelecimento com 16 caracteres deve retornar um erro', (done) => {
+            var codEstabelecimento = 'ABCDEFGHIJKLMNOP';    // 16 caracteres, pois o limite é 15
+            var codComanda = 1;
+
+            chai.request(app)
+                .get('/api/conta/' + codEstabelecimento + '/' + codComanda)
+                .end((err, res) => {
+                    res.should.have.status(422);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('error').eql('ParametrosInvalidos');
+                    done();
+                });
+        });
+
+        it.skip('Comanda inexistente deve retornar um erro', (done) => {
+            var codEstabelecimento = 'BARFRAN';
+            var codComanda = 321321;
+
+            chai.request(app)
+                .get('/api/conta/' + codEstabelecimento + '/' + codComanda)
+                .end((err, res) => {
+                    res.should.have.status(422);
                     res.body.should.be.a('object');
                     res.body.should.have.property('error').eql('ParametrosInvalidos');
                     done();

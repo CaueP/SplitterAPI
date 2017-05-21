@@ -8,8 +8,8 @@ var pedidoController = function () {
     var consultarConta = function (req, res) {
         var resposta;
 
-        // verificando se todos os parametros foram recebidos
-        req.assert('codEstabelecimento', 'CodEstabelecimento é obrigatório').notEmpty().isAlpha();
+        // verificando se todos os parametros foram recebidos e sao validos
+        req.assert('codEstabelecimento', 'CodEstabelecimento é obrigatório').notEmpty().isAlpha().isByteLength({min:0, max: 15});
         req.assert('cod_comanda', 'cod_comanda é obrigatório').notEmpty().isInt();
 
         // validação dos erros verificados
