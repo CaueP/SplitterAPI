@@ -33,10 +33,11 @@ describe('CSU04 - API Pedido', () => {
 
         });
 
-        it('Realizar um pedido realizado e retornar o número do pedido realizado', (done) => {
+        it('Realizar um pedido e retornar o número do pedido', (done) => {
             // pedido a ser enviado
             var pedido = {
                 codEstabelecimento: 'BARFRAN',
+                nrMesa: 1,
                 cod_comanda: 1,
                 cod_produto: 6,
                 qtd_produto: 1,
@@ -75,7 +76,7 @@ describe('CSU04 - API Pedido', () => {
 
         it('Deve retornar os pedidos de uma comanda', (done) => {
             var codEstabelecimento = 'BARFRAN';
-            var cod_comanda = 1;
+            var cod_comanda = 2;
 
             chai.request(app)
                 .get('/api/pedido/' + codEstabelecimento + '/' + cod_comanda)

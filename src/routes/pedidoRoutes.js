@@ -14,6 +14,7 @@ var router = function() {
          * @apiGroup Pedido
          *
          * @apiParam {String} codEstabelecimento Código do estabelecimento
+         * @apiParam {Number} nrMesa Número da mesa do estabelecimento
          * @apiParam {Number} cod_comanda Código da comanda
          * @apiParam {Number} cod_produto Código do produto
          * @apiParam {Number} qtd_produto Quantidade do produto
@@ -23,6 +24,7 @@ var router = function() {
          * @apiParamExample {json} Request-Example:
          *   {
          *           "codEstabelecimento": "TAVERNA",
+         *           "nrMesa": 1,
          *           "cod_comanda": 1,
          *           "cod_produto": 6,
          *           "qtd_produto": 2,

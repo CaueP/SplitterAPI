@@ -10,6 +10,7 @@ var pedidoController = function() {
 
         // verificando se todos os parametros foram recebidos
         req.assert('codEstabelecimento', 'CodEstabelecimento é obrigatório').notEmpty().isAlpha();
+        req.assert('nrMesa', 'nrMesa é obrigatório').notEmpty().isInt();
         req.assert('cod_comanda', 'cod_comanda é obrigatório').notEmpty().isInt();
         req.assert('cod_produto', 'cod_produto é obrigatório').notEmpty();
         req.assert('qtd_produto', 'qtd_produto é obrigatório').notEmpty();
@@ -18,6 +19,7 @@ var pedidoController = function() {
         // validação dos erros verificados
         var errors = req.validationErrors();
         if (errors) {
+            // console.log(errors);
             resposta = {
                 error: 'ParametrosInvalidos'
             };
@@ -27,6 +29,7 @@ var pedidoController = function() {
         }
         // dados para o insert
         var codEstabelecimento = req.body.codEstabelecimento,
+            nrMesa = req.body.nrMesa,
             cod_comanda = req.body.cod_comanda,
             cod_produto = req.body.cod_produto,
             qtd_produto = req.body.qtd_produto,
@@ -40,7 +43,7 @@ var pedidoController = function() {
                 return next("ErroConexaoBD");
             }
             // envia a query ao DB
-            var query = conn.query('CALL pr_realizar_pedido(?, ?, ?, ?, ?);', [codEstabelecimento, cod_comanda, cod_produto, qtd_produto, txt_observacao],
+            var query = conn.query('CALL pr_realizar_pedido(?, ?, ?, ?, ?, ?);', [codEstabelecimento, cod_comanda, cod_produto, qtd_produto, txt_observacao, nrMesa],
                 function(err, rows) {
                     if (err) {
                         //console.log(err);
@@ -111,6 +114,7 @@ var pedidoController = function() {
                     //console.log("Pedidos encontrados:", rows.length);
                     resposta = rows[0];
                     res.status(200);
+                    //console.log(resposta);
                     res.json(resposta);
                 });
         });
