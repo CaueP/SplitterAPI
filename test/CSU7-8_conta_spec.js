@@ -90,11 +90,13 @@ describe('CSU07/08 - API Conta', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('total');
-                    res.body.total.should.be.a('number');
+                    res.body.should.have.property('total_individual');
+                    res.body.total_individual.should.be.a('number');
+                    res.body.should.have.property('total_mesa');
+                    res.body.total_mesa.should.be.a('number');
                     res.body.should.have.property('pedidos');
                     res.body.pedidos.should.be.a('array');
-                    //console.log(res.body);
+                    console.log(res.body);
                     done();
                 });
         });
@@ -104,17 +106,20 @@ describe('CSU07/08 - API Conta', () => {
         it('Deve retornar a lista com os pedidos na conta e o total', (done) => {
             var codEstabelecimento = 'BARFRAN';
             var nrMesa = 1;
-            var codComanda = 1;
+            var codComanda = 2;
 
             chai.request(app)
                 .get('/api/conta/' + codEstabelecimento + '/' + nrMesa + '/' + codComanda)
                 .end((err, res) => {
                     res.should.have.status(201);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('total');
-                    res.body.total.should.be.a('number');
+                    res.body.should.have.property('total_individual');
+                    res.body.total_individual.should.be.a('number');
+                    res.body.should.have.property('total_mesa');
+                    res.body.total_mesa.should.be.a('number');
                     res.body.should.have.property('pedidos');
                     res.body.pedidos.should.be.a('array');
+                    // console.log(res.body)
                     done();
                 });
         });

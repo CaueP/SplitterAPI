@@ -9,7 +9,7 @@ var pedidoController = function () {
         var resposta;
 
         // verificando se todos os parametros foram recebidos e sao validos
-        req.assert('codEstabelecimento', 'CodEstabelecimento é obrigatório').notEmpty().isAlpha().isByteLength({min:0, max: 15});
+        req.assert('codEstabelecimento', 'CodEstabelecimento é obrigatório').notEmpty().isAlpha().isByteLength({ min: 0, max: 15 });
         req.assert('cod_comanda', 'cod_comanda é obrigatório').notEmpty().isInt();
 
         // validação dos erros verificados
@@ -48,7 +48,7 @@ var pedidoController = function () {
                     }
                     // console.log("Pedidos encontrados:", rows[0].length);
 
-                    calcularTotal(rows[0], (err, total) => {
+                    calcularTotal(rows[0], (err, totalIndividual, totalMesa) => {
                         if (err) {
                             console.log(err);
                             resposta = {
@@ -58,12 +58,23 @@ var pedidoController = function () {
                             res.json(resposta);
                             return;
                         } else {
-                            resposta = {
-                                total: total,
-                                pedidos: rows[0]
+                            if (req.body.isFecharConta) {
+                                resposta = {
+                                    total_individual: req.body.valorTotalIndividual,
+                                    total_mesa: req.body.valorTotalMesa,
+                                    pedidos: rows[0]
+                                }
+                                res.status(201);
+                                res.json(resposta);
+                            } else {
+                                resposta = {
+                                    total_individual: totalIndividual,
+                                    total_mesa: totalMesa,
+                                    pedidos: rows[0]
+                                }
+                                res.status(200);
+                                res.json(resposta);
                             }
-                            res.status(200);
-                            res.json(resposta);
                         }
 
                     });
@@ -72,17 +83,19 @@ var pedidoController = function () {
     };
 
     /**
-     * Calcula o valor total dos pedidos em uma lista de pedidos
+     * Calcula o valor total individual e da mesa dos pedidos em uma lista de pedidos
      * @param {*} pedidos Lista de pedidos
      */
     var calcularTotal = function (pedidos, cb) {
-        var total = 0;
+        var totalIndividual = 0;
+        var totalMesa = 0;
         for (var i = 0, len = pedidos.length; i < len; i++) {
             // console.log(pedidos[i]);
             // TODO: val_pedido deve ser alterado para o valor do pedido referente a parte do cliente
-            total = total + pedidos[i].val_pedido;
+            totalIndividual = totalIndividual + pedidos[i].val_a_pagar;
+            totalMesa = totalMesa + pedidos[i].val_pedido;
         }
-        return cb(null, total);
+        return cb(null, totalIndividual, totalMesa);
     }
 
     /**
@@ -114,23 +127,40 @@ var pedidoController = function () {
             cod_comanda = req.params.cod_comanda,
             nrMesa = req.params.nrMesa;
 
-        // TODO: Realizar chamada ao banco
+        // obtem conexao com o DB
+        req.getConnection(function (err, conn) {
+            if (err) {
+                console.log("Nao foi possivel conectar ao Banco de Dados");
+                console.log(err);
+                return next("ErroConexaoBD");
+            }
+            // envia a query ao DB
 
-        resposta = {
-            total: 100.10,
-            pedidos: [
-                {
-                    nome: "Vinho Branco",
-                    val_pedido: 50.05
-                },
-                {
-                    nome: "Whisk",
-                    val_pedido: 50.05
-                }
-            ]
-        }
-        res.status(201);
-        res.json(resposta);
+            var query = conn.query('CALL pr_fechar_comanda(?, ?, ?);', [codEstabelecimento, cod_comanda, nrMesa],
+                function (err, rows) {
+                    if (err) {
+                        console.log(err);
+                        resposta = {
+                            error: 'ParametroNaoEncontrado'
+                        };
+                        res.status(422);
+                        res.json(resposta);
+                        return;
+                    } else {
+                        // console.log(rows);
+                        // flag para indicar ao consultar conta que é um fechar conta
+                        req.body.isFecharConta = true;
+                        req.body.valorTotalMesa = rows[0][0].vl_total_mesa
+                        req.body.valorTotalIndividual = rows[0][0].vl_total_individual
+                        // console.log('')
+                        // console.log('vl_total_mesa')
+                        // console.log(req.body.valorTotalMesa);
+                        // console.log('vl_total_individual')
+                        // console.log(req.body.valorTotalIndividual);
+                        consultarConta(req, res);
+                    }
+                });
+        });
     }
 
     return {
