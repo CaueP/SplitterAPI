@@ -67,6 +67,9 @@ var router = function () {
     contaRouter.route('/:codEstabelecimento/:nrMesa/:cod_comanda')
         .get(contaController.fecharConta);
 
+    contaRouter.route('/pagar/:nrMesa/:cod_comanda')
+        .post(contaController.pagarConta);
+
     return contaRouter;
 };
 

@@ -163,9 +163,67 @@ var pedidoController = function () {
         });
     }
 
+    /**
+     * Função para registrar o pagamento da comanda
+     * @param {*} req 
+     * @param {*} res 
+     */
+    var pagarConta = function (req, res) {
+        var resposta;
+
+        // verificando se todos os parametros foram recebidos
+        req.assert('nrMesa', 'nrMesa é obrigatório').notEmpty().isInt();
+        req.assert('cod_comanda', 'cod_comanda é obrigatório').notEmpty().isInt();
+
+        // validação dos erros verificados
+        var errors = req.validationErrors();
+        if (errors) {
+            resposta = {
+                error: 'ParametrosInvalidos'
+            };
+            res.status(422);
+            res.json(resposta);
+            return;
+        }
+
+        // parametros para a procedure
+        var cod_comanda = req.params.cod_comanda,
+            nrMesa = req.params.nrMesa;
+
+        // obtem conexao com o DB
+        req.getConnection(function (err, conn) {
+            if (err) {
+                console.log("Nao foi possivel conectar ao Banco de Dados");
+                console.log(err);
+                return next("ErroConexaoBD");
+            }
+            // envia a query ao DB
+            var query = conn.query('CALL pr_realizar_pagamento(?, ?);', [cod_comanda, nrMesa],
+                function (err, rows) {
+                    if (err) {
+                        console.log(err);
+                        resposta = {
+                            error: 'ParametroNaoEncontrado',
+                            pagamentoRealizado: false
+                        };
+                        res.status(422);
+                        res.json(resposta);
+                        return;
+                    } else {
+                        resposta = {
+                            pagamentoRealizado: true
+                        };
+                        res.status(201);
+                        res.json(resposta);
+                    }
+                });
+        });
+    }
+
     return {
         consultarConta: consultarConta,
-        fecharConta: fecharConta
+        fecharConta: fecharConta,
+        pagarConta: pagarConta
     }
 };
 module.exports = pedidoController;

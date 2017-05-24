@@ -124,4 +124,20 @@ describe('CSU07/08 - API Conta', () => {
                 });
         });
     });
+
+    describe('Teste de Pagamento de Conta', () => {
+        it('Deve retornar pagamento bem sucedido', (done) => {
+            var nrMesa = 1;
+            var codComanda = 2;
+
+            chai.request(app)
+                .post('/api/conta/pagar/' + nrMesa + '/' + codComanda)
+                .end((err, res) => {
+                    res.should.have.status(201);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('pagamentoRealizado').eql(true);
+                    done();
+                });
+        });
+    });
 });
