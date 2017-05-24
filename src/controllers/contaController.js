@@ -1,11 +1,11 @@
-var pedidoController = function () {
+var pedidoController = function() {
 
     /**
      * Função para consultar pedidos em uma comanda
      * @param {*} req 
      * @param {*} res 
      */
-    var consultarConta = function (req, res) {
+    var consultarConta = function(req, res) {
         var resposta;
 
         // verificando se todos os parametros foram recebidos e sao validos
@@ -28,7 +28,7 @@ var pedidoController = function () {
             cod_comanda = req.params.cod_comanda;
 
         // obtem conexao com o DB
-        req.getConnection(function (err, conn) {
+        req.getConnection(function(err, conn) {
             if (err) {
                 console.log("Nao foi possivel conectar ao Banco de Dados");
                 console.log(err);
@@ -36,7 +36,7 @@ var pedidoController = function () {
             }
             // envia a query ao DB
             var query = conn.query('CALL pr_consultar_pedido(?, ?);', [codEstabelecimento, cod_comanda],
-                function (err, rows) {
+                function(err, rows) {
                     if (err) {
                         console.log(err);
                         resposta = {
@@ -86,7 +86,7 @@ var pedidoController = function () {
      * Calcula o valor total individual e da mesa dos pedidos em uma lista de pedidos
      * @param {*} pedidos Lista de pedidos
      */
-    var calcularTotal = function (pedidos, cb) {
+    var calcularTotal = function(pedidos, cb) {
         var totalIndividual = 0;
         var totalMesa = 0;
         for (var i = 0, len = pedidos.length; i < len; i++) {
@@ -103,7 +103,7 @@ var pedidoController = function () {
      * @param {*} req 
      * @param {*} res 
      */
-    var fecharConta = function (req, res) {
+    var fecharConta = function(req, res) {
         var resposta;
 
         // verificando se todos os parametros foram recebidos
@@ -128,7 +128,7 @@ var pedidoController = function () {
             nrMesa = req.params.nrMesa;
 
         // obtem conexao com o DB
-        req.getConnection(function (err, conn) {
+        req.getConnection(function(err, conn) {
             if (err) {
                 console.log("Nao foi possivel conectar ao Banco de Dados");
                 console.log(err);
@@ -137,7 +137,7 @@ var pedidoController = function () {
             // envia a query ao DB
 
             var query = conn.query('CALL pr_fechar_comanda(?, ?, ?);', [codEstabelecimento, cod_comanda, nrMesa],
-                function (err, rows) {
+                function(err, rows) {
                     if (err) {
                         console.log(err);
                         resposta = {
@@ -152,11 +152,11 @@ var pedidoController = function () {
                         req.body.isFecharConta = true;
                         req.body.valorTotalMesa = rows[0][0].vl_total_mesa
                         req.body.valorTotalIndividual = rows[0][0].vl_total_individual
-                        // console.log('')
-                        // console.log('vl_total_mesa')
-                        // console.log(req.body.valorTotalMesa);
-                        // console.log('vl_total_individual')
-                        // console.log(req.body.valorTotalIndividual);
+                            // console.log('')
+                            // console.log('vl_total_mesa')
+                            // console.log(req.body.valorTotalMesa);
+                            // console.log('vl_total_individual')
+                            // console.log(req.body.valorTotalIndividual);
                         consultarConta(req, res);
                     }
                 });
@@ -168,7 +168,7 @@ var pedidoController = function () {
      * @param {*} req 
      * @param {*} res 
      */
-    var pagarConta = function (req, res) {
+    var pagarConta = function(req, res) {
         var resposta;
 
         // verificando se todos os parametros foram recebidos
@@ -191,7 +191,7 @@ var pedidoController = function () {
             nrMesa = req.params.nrMesa;
 
         // obtem conexao com o DB
-        req.getConnection(function (err, conn) {
+        req.getConnection(function(err, conn) {
             if (err) {
                 console.log("Nao foi possivel conectar ao Banco de Dados");
                 console.log(err);
@@ -199,7 +199,7 @@ var pedidoController = function () {
             }
             // envia a query ao DB
             var query = conn.query('CALL pr_realizar_pagamento(?, ?);', [cod_comanda, nrMesa],
-                function (err, rows) {
+                function(err, rows) {
                     if (err) {
                         console.log(err);
                         resposta = {
