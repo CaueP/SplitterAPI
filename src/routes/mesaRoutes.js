@@ -22,17 +22,18 @@ var router = function() {
          * @apiSuccessExample {json} Success-Response:
          *     HTTP/1.1 200 OK
          * [
-         *              {
-         *                  "nome": "Ada Lovelace",
-         *                  "email": "ada.lovelace@history.com",
-         *                  "nrComanda": 1,
-         *                  "url_foto": "https://vignette1.wikia.nocookie.net/curious-expedition/images/a/a0/Lovelace.jpg",
-         *              },
-         *              {
-         *                  "nome": "Alan Mathison Turing",
-         *                  "email": "alan.turing@history.com",
-         *                  "nrComanda": 2,
-         *                  "url_foto": "https://static.comicvine.com/uploads/scale_small/11/110802/4582551-alan-turing.gif",
+         *          {
+         *              "nome": "Ada Lovelace",
+         *              "email": "ada.lovelace@history.com",
+         *              "nrComanda": 1,
+         *              "url_foto": "https://vignette1.wikia.nocookie.net/curious-expedition/images/a/a0/Lovelace.jpg"
+         *          },
+         *          {
+         *              "nome": "Alan Mathison Turing",
+         *              "email": "alan.turing@history.com",
+         *              "nrComanda": 2,
+         *              "url_foto": "https://static.comicvine.com/uploads/scale_small/11/110802/4582551-alan-turing.gif"
+         *          },
          *  ]
          * 
          * @apiError ParametrosInvalidos Os parâmetros passados são inválidos.
