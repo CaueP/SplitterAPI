@@ -71,8 +71,10 @@ var router = function() {
          * @apiSuccess {String} nome_produto Nome do produto
          * @apiSuccess {Number} qtd_produto Quantidade de produtos pedidos
          * @apiSuccess {String} link_img_produto URL para imagem do produto
+         * @apiSuccess {Number} val_a_pagar Valor individual a pagar
          * @apiSuccess {Number} val_pedido Valor total do pedido
          * @apiSuccess {Number} cod_status_pedido Código de status do pedido
+         * @apiSuccess {String} txt_observacao Observação inserida ao realizar o pedido
          *
          * @apiSuccessExample {json} Success-Response:
          *     HTTP/1.1 200 OK
@@ -91,7 +93,9 @@ var router = function() {
          *          "qtd_produto": 2,
          *          "link_img_produto": "http://www.bigxpicanha.com.br/Content/Produto/Imagem/Fritas-com-Cheddar-e-Bacon-108.png",
          *          "val_pedido": 27.5,
+         *          "val_a_pagar":  10,
          *          "cod_status_pedido": 0
+         *          "txt_observacao": "Com sal"
          *    ]
          * 
          * @apiError ParametrosInvalidos Os parâmetros passados são inválidos.
