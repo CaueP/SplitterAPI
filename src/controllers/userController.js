@@ -6,14 +6,15 @@ var userController = function(pool) {
         // Query database (connection implicitly established)
         pool.getConnection(function(err, connection) {
             // preparying query                   
-            var sql = "CALL pr_criar_nova_conta (?,?,STR_TO_DATE(?,'%d/%m/%Y'),?,?,?,?)";
+            var sql = "CALL pr_criar_nova_conta (?,?,STR_TO_DATE(?,'%d/%m/%Y'),?,?,?,?,?)";
             var inserts = [req.body.nome,
                 req.body.cpf,
                 req.body.dataNascimento,
                 req.body.email,
                 req.body.telefone,
                 req.body.email,
-                req.body.senha
+                req.body.senha,
+                req.body.url_foto
             ];
             sql = mysql.format(sql, inserts);
             // Use the connection 

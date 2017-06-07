@@ -75,6 +75,7 @@ dt_nascimento DATETIME NOT NULL,
 txt_email VARCHAR (100) NOT NULL UNIQUE,
 nr_telefone BIGINT,
 conta_ativa boolean NOT NULL DEFAULT 1,
+url_foto VARCHAR (300),
 CONSTRAINT PK_tb_cliente PRIMARY KEY NONCLUSTERED (Id)
 );
 

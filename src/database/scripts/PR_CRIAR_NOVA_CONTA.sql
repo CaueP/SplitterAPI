@@ -10,7 +10,8 @@ IN dt_nascimento DATETIME ,
 IN txt_email VARCHAR (100) ,
 IN nr_telefone BIGINT,
 IN txt_login VARCHAR (30) ,
-IN txt_senha VARCHAR (30) -- ,
+IN txt_senha VARCHAR (30) ,
+IN url_foto VARCHAR (300) -- ,
 -- txt_nome_cartao VARCHAR (100),
 -- nr_cartao BIGINT ,
 -- cod_seguranca_cartao INT ,
@@ -22,7 +23,7 @@ IN txt_senha VARCHAR (30) -- ,
 BEGIN 
  
 INSERT INTO tb_cliente
-VALUES (null, txt_nome, nr_cpf, dt_nascimento, txt_email, nr_telefone,1);
+VALUES (null, txt_nome, nr_cpf, dt_nascimento, txt_email, nr_telefone,1, url_foto);
  
 INSERT INTO tb_login
 VALUES (LAST_INSERT_ID(), txt_login, txt_senha);

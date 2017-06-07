@@ -9,7 +9,7 @@ IN cod_mesa INT
 
 BEGIN 			 
 	
-	SELECT A.txt_nome AS nome, A.txt_email AS email, D.cod_comanda AS comanda
+	SELECT A.txt_nome AS nome, A.txt_email AS email, D.cod_comanda AS comanda, A.url_foto AS url_foto
 	FROM tb_cliente AS A
 	INNER JOIN tb_estabelecimento AS B 
 	ON B.id_associacao_estabelecimento = id_associacao_estabelecimento
