@@ -45,7 +45,7 @@ var pedidoController = function() {
                         return;
                     }
                     //console.log("Pedidos encontrados:", rows.length);
-                    resposta = rows[0];
+                    resposta = rows;
                     res.status(200);
                     //console.log(resposta);
                     res.json(resposta);
