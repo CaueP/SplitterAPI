@@ -119,6 +119,13 @@ app.use('/api/admin', adminRouter);
 app.use('/api/conta', contaRouter);
 app.use('/api/mesa', mesaRouter);
 
+/**
+ * API Estabelecimento
+ */
+
+var estabPedidoRouter = require('./src/routes/estabelecimento/pedidoRoutes')();
+app.use('/api/estabelecimento/pedido', estabPedidoRouter);
+
 // start server on the specified port and binding host
 if (!module.parent) { // checking if a parent already exists, so it doesn't create another one (for testing)
     app.listen(appEnv.port, '0.0.0.0', function() {
