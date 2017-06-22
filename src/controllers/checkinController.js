@@ -159,6 +159,7 @@ var checkinController = function(pool) {
                                         mesa: {
                                             codEstabelecimento: mesa.codEstabelecimento,
                                             nrMesa: mesa.nrMesa,
+                                            qrCodeOcupado: qrCodeOcupado,
                                             usuarioResponsavel: usuarioResponsavel
                                         },
                                         comanda: {
