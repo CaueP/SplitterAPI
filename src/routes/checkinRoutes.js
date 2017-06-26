@@ -20,6 +20,7 @@ var router = function(mySqlPool) {
          * @apiParam {Object} mesa Objeto mesa
          * @apiParam {String} qrCode QR Code completo da Mesa
          * @apiParam {String} nrMesa Número da mesa
+         * @apiParam {Number} tipoDivisao Método de divisão da conta da mesa (Mesa = 1, Individual = 2)
          * @apiParam {String} codEstabelecimento Código do estabelecimento
          *
          * @apiSampleRequest /api/checkin/
@@ -32,7 +33,8 @@ var router = function(mySqlPool) {
          *           "mesa": {
          *               "qrCode": "001TAVERNA",
          *               "nrMesa": "001",
-         *               "codEstabelecimento": "TAVERNA"
+         *               "codEstabelecimento": "TAVERNA",
+         *               "tipoDivisao": 1
          *           }
          *   }
          *
