@@ -112,8 +112,8 @@ var checkinController = function(pool) {
 
                     // se mesa estiver livre, realizar checkin. Cria-se a comanda e retorna flag primeiroUsuario = true
                     if (statusMesa == MESA_LIVRE_STRING) {
-                        console.log('====CHECK IN EM MESA LIVRE=======')
-                            //console.log('Check-in em mesa livre: ');
+                        // console.log('====CHECK IN EM MESA LIVRE=======')
+                        //console.log('Check-in em mesa livre: ');
                         associarClienteMesa(usuario, mesa, mesa.tipoDivisao, mesa.qrCode + usuario.email, function(error, resultadoAssociacao) {
                             if (!err) {
                                 respostaCheckin = {
@@ -144,13 +144,13 @@ var checkinController = function(pool) {
                     } else
                     // se mesa estiver ocupada, retornar mesa ocupada e informar que é necessário realizar check-in com pessoa x
                     if (statusMesa == MESA_OCUPADA_STRING) {
-                        console.log(results[0]);
+                        // console.log(results[0]);
                         qrCodeOcupado = results[0].cod_qr_ocupado;
                         usuarioResponsavel = results[0].txt_email;
                         mesa.tipoDivisao = results[0].tipoDivisao; // atribuindo o mesmo tipo de divisão anterior para quando a mesa estiver ocupada
 
-                        console.log('====CHECK IN EM MESA OCUPADA: ' + qrCodeOcupado);
-                        console.log('USUARIO RESPONSAVEL: ' + usuarioResponsavel);
+                        // console.log('====CHECK IN EM MESA OCUPADA: ' + qrCodeOcupado);
+                        // console.log('USUARIO RESPONSAVEL: ' + usuarioResponsavel);
 
                         // se o codigo do id do usuario dono 
                         //e é o QR Code sem o id do usuario responsável pela mesa
