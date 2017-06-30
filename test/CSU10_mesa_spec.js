@@ -55,7 +55,7 @@ describe('CSU09 - API Mesa', () => {
         });
 
         it('Mesa invalida deve retornar um erro', (done) => {
-            var codEstabelecimento = 'BARFRAN';
+            var codEstabelecimento = 'BARDOFRAN';
             var nrMesa = 'e32e32dw';
 
             chai.request(app)
@@ -69,7 +69,7 @@ describe('CSU09 - API Mesa', () => {
         });
 
         it('Deve retornar a lista com os participantes de uma mesa', (done) => {
-            var codEstabelecimento = 'BARFRAN';
+            var codEstabelecimento = 'BARDOFRAN';
             var nrMesa = 1;
 
             chai.request(app)

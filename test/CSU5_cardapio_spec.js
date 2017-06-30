@@ -11,7 +11,7 @@ describe("CSU5 - API Cardapio", function() {
      */
     describe('Consultar cardapio existente', () => {
         it('Retorna lista com os itens do cardápio', (done) => {
-            var codEstabelecimento = 'BARFRAN';
+            var codEstabelecimento = 'BARDOFRAN';
 
             chai.request(app)
                 .get('/api/cardapio/' + codEstabelecimento)

@@ -65,7 +65,7 @@ var router = function() {
          * @apiName GetPedidos
          * @apiGroup Pedido
          *
-         * @apiSampleRequest /api/pedido/BARFRAN/1
+         * @apiSampleRequest /api/pedido/BARDOFRAN/1
          *
          * @apiSuccess {Number} cod_pedido Código do pedido realizado
          * @apiSuccess {String} nome_produto Nome do produto

@@ -2,7 +2,7 @@ var express = require('express');
 
 var cardapioRouter = express.Router();
 
-var router = function (mySqlPool) {
+var router = function(mySqlPool) {
 
     var cardapioController = require('../controllers/cardapioController')(mySqlPool);
 
@@ -13,7 +13,7 @@ var router = function (mySqlPool) {
          * @apiName GetCardapioEstabelecimento
          * @apiGroup Cardapio
          *
-         * @apiSampleRequest /api/cardapio/BARFRAN
+         * @apiSampleRequest /api/cardapio/BARDOFRAN
          *
          * @apiSuccess {Object} cardapio Lista com itens do cardápio
          * @apiSuccess {Number} cod_produto Código do produto

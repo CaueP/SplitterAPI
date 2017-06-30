@@ -12,7 +12,7 @@ var router = function() {
          * @apiName GetTotal
          * @apiGroup Conta
          *
-         * @apiSampleRequest /api/conta/BARFRAN/1
+         * @apiSampleRequest /api/conta/BARDOFRAN/1
          *
          * @apiSuccess {Number} total Valor total dos pedidos realizados
          * @apiSuccess {Number} cod_pedido Código do pedido realizado

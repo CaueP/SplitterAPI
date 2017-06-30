@@ -20,7 +20,7 @@ BEGIN
 							 
 	IF (@ind_status_mesa = 0) THEN						 
 
-		SELECT C.dsc_ind_status_mesa, cod_qr_ocupado, Null as cod_cliente
+		SELECT C.dsc_ind_status_mesa, cod_qr_ocupado, Null as cod_cliente, A.tp_divisao AS tipoDivisao
 		FROM tb_mesa AS A
 		INNER JOIN tb_estabelecimento AS B
 		ON A.cod_estabelecimento = B.cod_estabelecimento
@@ -32,7 +32,7 @@ BEGIN
 	  
 	ELSE
 	
-		SELECT C.dsc_ind_status_mesa, cod_qr_ocupado, E.txt_email
+		SELECT C.dsc_ind_status_mesa, cod_qr_ocupado, E.txt_email, A.tp_divisao AS tipoDivisao
 		FROM tb_mesa AS A
 		INNER JOIN tb_estabelecimento AS B
 		ON A.cod_estabelecimento = B.cod_estabelecimento

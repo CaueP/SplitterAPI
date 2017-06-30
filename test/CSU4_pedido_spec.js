@@ -15,7 +15,7 @@ describe('CSU04 - API Pedido', () => {
         it('Realizar um pedido sem algum campo e retornar um erro', (done) => {
             // pedido a ser enviado
             var pedido = {
-                codEstabelecimento: 'BARFRAN',
+                codEstabelecimento: 'BARDOFRAN',
                 cod_produto: 6,
                 qtd_produto: 1,
                 txt_observacao: "Sem sal"
@@ -36,7 +36,7 @@ describe('CSU04 - API Pedido', () => {
         it('Realizar um pedido e retornar o número do pedido', (done) => {
             // pedido a ser enviado
             var pedido = {
-                codEstabelecimento: 'BARFRAN',
+                codEstabelecimento: 'BARDOFRAN',
                 nrMesa: 1,
                 cod_comanda: 1,
                 cod_produto: 6,
@@ -61,7 +61,7 @@ describe('CSU04 - API Pedido', () => {
      */
     describe('Consultar pedidos GET /pedido/:codEstabelecimento/:cod_comanda', () => {
         it('Passando parametros invalidos - deve retornar erro', (done) => {
-            var codEstabelecimento = 'BARFRAN';
+            var codEstabelecimento = 'BARDOFRAN';
             var cod_comanda = 'dsada';
 
             chai.request(app)
@@ -75,7 +75,7 @@ describe('CSU04 - API Pedido', () => {
         });
 
         it('Deve retornar os pedidos de uma comanda', (done) => {
-            var codEstabelecimento = 'BARFRAN';
+            var codEstabelecimento = 'BARDOFRAN';
             var cod_comanda = 2;
 
             chai.request(app)

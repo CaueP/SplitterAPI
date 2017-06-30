@@ -8,7 +8,7 @@ INSERT INTO tb_cliente (txt_nome, nr_cpf, dt_nascimento, txt_email, nr_telefone,
 VALUES ('Francisco', 945326423, '1946-12-02', 'francisco_fran@gmail.com', 45335663, 1);
 
 INSERT INTO tb_estabelecimento (id_associacao_estabelecimento, nr_cnpj, dsc_razao_social, dsc_nome_fantasia, dsc_endereco, nr_telefone)
-VALUES ('BARFRAN', 234235235, 'ALIMENTOS FRANCISCO', 'BAR DO FRANCISCO', 'Rua Alfredo Pujol, 101', 325423624);
+VALUES ('BARDOFRAN', 234235235, 'ALIMENTOS FRANCISCO', 'BAR DO FRANCISCO', 'Rua Alfredo Pujol, 101', 325423624);
 
 INSERT INTO tb_estabelecimento (id_associacao_estabelecimento, nr_cnpj, dsc_razao_social, dsc_nome_fantasia, dsc_endereco, nr_telefone)
 VALUES ('IMPBEBIDAS', 234235235, 'BEBIDAS IMPORTADAS', 'IMPORT BEBIDAS', 'Rua Vergueiro, 501', 65498422);
@@ -47,7 +47,7 @@ VALUES (2, 0, 1, '45543453', '', 0, null, 0);
 
 
 INSERT INTO tb_tp_alimento VALUES(1, 'Aperitivos');
-INSERT INTO tb_tp_alimento VALUES(2, 'Porções');
+INSERT INTO tb_tp_alimento VALUES(2, 'Porï¿½ï¿½es');
 INSERT INTO tb_tp_alimento VALUES(3, 'Entradas');
 INSERT INTO tb_tp_alimento VALUES(4, 'Saladas');
 INSERT INTO tb_tp_alimento VALUES(5, 'Prato Principal');
@@ -57,95 +57,95 @@ INSERT INTO tb_tp_alimento VALUES(8, 'Bebidas');
 
 
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Batata Frita', 2, 'Batata frita, porção de 500 gramas', 22.50, 'http://www.restaurantecozinhaitaliana.com.br/files/batata.jpg', 1);
+VALUES ('Batata Frita', 2, 'Batata frita, porï¿½ï¿½o de 500 gramas', 22.50, 'http://www.restaurantecozinhaitaliana.com.br/files/batata.jpg', 1);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES('Batata Frita Suprema', 2, 'Batata frita com cheddar, bacon e queijo ralado, porção de 500 gramas', 27.50, 'http://www.bigxpicanha.com.br/Content/Produto/Imagem/Fritas-com-Cheddar-e-Bacon-108.png', 1);
+VALUES('Batata Frita Suprema', 2, 'Batata frita com cheddar, bacon e queijo ralado, porï¿½ï¿½o de 500 gramas', 27.50, 'http://www.bigxpicanha.com.br/Content/Produto/Imagem/Fritas-com-Cheddar-e-Bacon-108.png', 1);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Mini Coxinha', 2, 'Coxinhas de Frango, porção de 10 unidades', 32.00, 'http://natashopping.com.br/lojas/supermercadonata/produtos/15688/galeria/mini-coxinha-com-catupiry-cento-400x400-1.jpg', 1);
+VALUES ('Mini Coxinha', 2, 'Coxinhas de Frango, porï¿½ï¿½o de 10 unidades', 32.00, 'http://natashopping.com.br/lojas/supermercadonata/produtos/15688/galeria/mini-coxinha-com-catupiry-cento-400x400-1.jpg', 1);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Azeitonas', 2, 'Azeitonas (Verde ou Preta), porção de 100 gramas', 15.00, 'http://garotasfdp.com.br/wp-content/uploads/2017/02/azeitona.jpg', 1);
+VALUES ('Azeitonas', 2, 'Azeitonas (Verde ou Preta), porï¿½ï¿½o de 100 gramas', 15.00, 'http://garotasfdp.com.br/wp-content/uploads/2017/02/azeitona.jpg', 1);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Sucos', 8, 'Sucos Naturais de Uva, Manga, Goiaba, Pêssego, Maracujá', 9.00, 'http://www.seucorpoperfeito.com.br/wp-content/uploads/2015/01/sucos-funcionais-anti-acne.jpg', 1);
+VALUES ('Sucos', 8, 'Sucos Naturais de Uva, Manga, Goiaba, Pï¿½ssego, Maracujï¿½', 9.00, 'http://www.seucorpoperfeito.com.br/wp-content/uploads/2015/01/sucos-funcionais-anti-acne.jpg', 1);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Água', 8, 'Água (Natural ou Com gás)', 4.00, 'http://cdn.ecycle.com.br/images/eDicas/diaadia/garrafa-pet-agua.jpg', 1);
+VALUES ('ï¿½gua', 8, 'ï¿½gua (Natural ou Com gï¿½s)', 4.00, 'http://cdn.ecycle.com.br/images/eDicas/diaadia/garrafa-pet-agua.jpg', 1);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Pizza Calabresa', 6, 'Pizza 8 fatias. Ingredientes: Molho, mussarela, calabresa, cebola fatiada e orégano.', 32.00, 'http://biancapizzaria.com.br/wp-content/uploads/2015/07/03-calabresa3-600x500.png', 1);
+VALUES ('Pizza Calabresa', 6, 'Pizza 8 fatias. Ingredientes: Molho, mussarela, calabresa, cebola fatiada e orï¿½gano.', 32.00, 'http://biancapizzaria.com.br/wp-content/uploads/2015/07/03-calabresa3-600x500.png', 1);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Pizza Mussarela', 6, 'Pizza 8 fatias. Molho, mussarela, tomate em rodelas e orégano.', 28.00, 'http://biancapizzaria.com.br/wp-content/uploads/2015/07/01-mussarela7-600x500.png', 1);
+VALUES ('Pizza Mussarela', 6, 'Pizza 8 fatias. Molho, mussarela, tomate em rodelas e orï¿½gano.', 28.00, 'http://biancapizzaria.com.br/wp-content/uploads/2015/07/01-mussarela7-600x500.png', 1);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Pizza Margherita', 6, 'Pizza 8 fatias. Ingredientes: Molho, mussarela, calabresa, cebola fatiada e orégano.', 38.00, 'http://biancapizzaria.com.br/wp-content/uploads/2015/07/24-margherita3-600x500.png', 1);
+VALUES ('Pizza Margherita', 6, 'Pizza 8 fatias. Ingredientes: Molho, mussarela, calabresa, cebola fatiada e orï¿½gano.', 38.00, 'http://biancapizzaria.com.br/wp-content/uploads/2015/07/24-margherita3-600x500.png', 1);
 
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES('Batata Frita', 2, 'Batata frita, porção de 500 gramas', 22.50, 'http://www.restaurantecozinhaitaliana.com.br/files/batata.jpg', 2);
+VALUES('Batata Frita', 2, 'Batata frita, porï¿½ï¿½o de 500 gramas', 22.50, 'http://www.restaurantecozinhaitaliana.com.br/files/batata.jpg', 2);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Batata Frita Suprema', 2, 'Batata frita com cheddar, bacon e queijo ralado, porção de 500 gramas', 27.50, 'http://www.bigxpicanha.com.br/Content/Produto/Imagem/Fritas-com-Cheddar-e-Bacon-108.png', 2);
+VALUES ('Batata Frita Suprema', 2, 'Batata frita com cheddar, bacon e queijo ralado, porï¿½ï¿½o de 500 gramas', 27.50, 'http://www.bigxpicanha.com.br/Content/Produto/Imagem/Fritas-com-Cheddar-e-Bacon-108.png', 2);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Mini Coxinha', 2, 'Coxinhas de Frango, porção de 10 unidades', 32.00, 'http://natashopping.com.br/lojas/supermercadonata/produtos/15688/galeria/mini-coxinha-com-catupiry-cento-400x400-1.jpg', 2);
+VALUES ('Mini Coxinha', 2, 'Coxinhas de Frango, porï¿½ï¿½o de 10 unidades', 32.00, 'http://natashopping.com.br/lojas/supermercadonata/produtos/15688/galeria/mini-coxinha-com-catupiry-cento-400x400-1.jpg', 2);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES('Azeitonas', 2, 'Azeitonas (Verde ou Preta), porção de 100 gramas', 15.00, 'http://garotasfdp.com.br/wp-content/uploads/2017/02/azeitona.jpg', 2);
+VALUES('Azeitonas', 2, 'Azeitonas (Verde ou Preta), porï¿½ï¿½o de 100 gramas', 15.00, 'http://garotasfdp.com.br/wp-content/uploads/2017/02/azeitona.jpg', 2);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Sucos', 8, 'Sucos Naturais de Uva, Manga, Goiaba, Pêssego, Maracujá', 9.00, 'http://www.seucorpoperfeito.com.br/wp-content/uploads/2015/01/sucos-funcionais-anti-acne.jpg', 2);
+VALUES ('Sucos', 8, 'Sucos Naturais de Uva, Manga, Goiaba, Pï¿½ssego, Maracujï¿½', 9.00, 'http://www.seucorpoperfeito.com.br/wp-content/uploads/2015/01/sucos-funcionais-anti-acne.jpg', 2);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Água', 8, 'Água (Natural ou Com gás)', 4.00, 'http://cdn.ecycle.com.br/images/eDicas/diaadia/garrafa-pet-agua.jpg', 2);
+VALUES ('ï¿½gua', 8, 'ï¿½gua (Natural ou Com gï¿½s)', 4.00, 'http://cdn.ecycle.com.br/images/eDicas/diaadia/garrafa-pet-agua.jpg', 2);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Comercial', 6, 'Bife, frango ou Calabresa com arroz, feijão, fritas e ovo', 15.00, 'http://grinvillefastfood.com.br/img/gallery/pratos/full/image22.jpg', 2);
+VALUES ('Comercial', 6, 'Bife, frango ou Calabresa com arroz, feijï¿½o, fritas e ovo', 15.00, 'http://grinvillefastfood.com.br/img/gallery/pratos/full/image22.jpg', 2);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
 VALUES ('Contra-Filet', 6, 'Contra-Filet com arroz e fritas', 18.00, 'http://www.mouriscoforneria.com.br/images/picanha-prato.jpg', 2);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
-VALUES ('Filet à Parmegiana', 6, 'Parmegiana com arroz e fritas', 20.00, 'https://i2.wp.com/bardohelio.com.br/wp-content/uploads/2015/08/contra-file-parmegiana.jpg?fit=988%2C659', 2);
+VALUES ('Filet ï¿½ Parmegiana', 6, 'Parmegiana com arroz e fritas', 20.00, 'https://i2.wp.com/bardohelio.com.br/wp-content/uploads/2015/08/contra-file-parmegiana.jpg?fit=988%2C659', 2);
 
 
 -- CHAMADAS
-CALL pr_consultar_status_mesa (1, 'BARFRAN');
+CALL pr_consultar_status_mesa (1, 'BARDOFRAN');
 CALL pr_consultar_status_mesa (1, 'IMPBEBIDAS');
-CALL pr_consultar_status_mesa (2, 'BARFRAN');
+CALL pr_consultar_status_mesa (2, 'BARDOFRAN');
 
 -- email, tp_divisao, cod_qr_ocupado, id_associacao_estabelecimento, cod_mesa
-CALL pr_associar_cliente_mesa ('ana_maria@gmail.com', 1, '82374234', 'BARFRAN', 1);
+CALL pr_associar_cliente_mesa ('ana_maria@gmail.com', 1, '82374234', 'BARDOFRAN', 1);
 CALL pr_associar_cliente_mesa ('paulo_paulo@gmail.com', 1, '45633453', 'IMPBEBIDAS', 1);
 -- CALL pr_associar_cliente_mesa ('paulo_paulo@gmail.com', 1, '001IMPBEBIDAS', 'IMPBEBIDAS', 1);
 CALL pr_associar_cliente_mesa ('ana_maria@gmail.com', 1, '001IMPBEBIDAS', 'IMPBEBIDAS', 1);
-CALL pr_associar_cliente_mesa ('paulo_paulo@gmail.com', 1, '002BARFRAN', 'BARFRAN', 2);
+CALL pr_associar_cliente_mesa ('paulo_paulo@gmail.com', 1, '002BARDOFRAN', 'BARDOFRAN', 2);
 
 -- cod_mesa,id_associacao_estabelecimento, cod_qr_ocupado, ind_status_mesa INT
-CALL pr_consultar_cardapio('BARFRAN');
+CALL pr_consultar_cardapio('BARDOFRAN');
 CALL pr_consultar_cardapio('IMPBEBIDAS');
 
 -- id_associacao_estabelecimento,cod_comanda, cod_produto,qtd_produto,txt_observacao, cod_mesa
-CALL pr_realizar_pedido('BARFRAN', 1, 1, 2, 'Bem passado', 1); -- ana - FRAN
+CALL pr_realizar_pedido('BARDOFRAN', 1, 1, 2, 'Bem passado', 1); -- ana - FRAN
 CALL pr_realizar_pedido('IMPBEBIDAS', 2, 10, 1, 'Queimada', 1); -- ana/paulo - IM
 CALL pr_realizar_pedido('IMPBEBIDAS', 2, 18, 1, 'Sem cebola', 1);  -- ana/paulo - IM
 CALL pr_realizar_pedido('IMPBEBIDAS', 3, 17, 2, 'Mal passado', 1); -- ana/paulo - IM
-CALL pr_realizar_pedido('BARFRAN', 4, 1, 2, 'Bem passado', 2); -- paulo - FRAN
+CALL pr_realizar_pedido('BARDOFRAN', 4, 1, 2, 'Bem passado', 2); -- paulo - FRAN
 CALL pr_realizar_pedido('IMPBEBIDAS', 2, 11, 1, 'Queimada', 1); -- ana/paulo - IM
 
 
 -- id_associacao_estabelecimento,cod_comanda
-CALL pr_consultar_pedido('BARFRAN', 1);
+CALL pr_consultar_pedido('BARDOFRAN', 1);
 CALL pr_consultar_pedido('IMPBEBIDAS', 2);
 
 
 -- id_associacao_estabelecimento,cod_comanda, cod_mesa
 CALL pr_fechar_comanda ('IMPBEBIDAS', 2, 1);
-CALL pr_fechar_comanda ('BARFRAN', 1, 1);
+CALL pr_fechar_comanda ('BARDOFRAN', 1, 1);
 
 CALL pr_realizar_pagamento (2, 1);
 CALL pr_realizar_pagamento (1, 1);
 
 -- id_associacao_estabelecimento,cod_comanda, cod_pedido, cod_status_pedido
-CALL pr_atualizar_status_pedido('BARFRAN', 1, 1, 1);
-CALL pr_atualizar_status_pedido('BARFRAN', 1, 1, 0);
+CALL pr_atualizar_status_pedido('BARDOFRAN', 1, 1, 1);
+CALL pr_atualizar_status_pedido('BARDOFRAN', 1, 1, 0);
 CALL pr_atualizar_status_pedido('IMPBEBIDAS', 2, 2, 1);
 CALL pr_atualizar_status_pedido('IMPBEBIDAS', 2, 3, 1);
 CALL pr_atualizar_status_pedido('IMPBEBIDAS', 2, 2, 0);
 
 
-CALL pr_atualizar_status_mesa(1, 'BARFRAN', '', 0);
+CALL pr_atualizar_status_mesa(1, 'BARDOFRAN', '', 0);
 CALL pr_atualizar_status_mesa(1, 'IMPBEBIDAS', '', 0);
 
 
 
-CALL pr_consultar_participantes ('BARFRAN', 1);
+CALL pr_consultar_participantes ('BARDOFRAN', 1);
 CALL pr_consultar_participantes ('IMPBEBIDAS', 1);
-CALL pr_consultar_participantes ('BARFRAN', 2);
+CALL pr_consultar_participantes ('BARDOFRAN', 2);
 

@@ -150,13 +150,14 @@ var pedidoController = function() {
                         // console.log(rows);
                         // flag para indicar ao consultar conta que é um fechar conta
                         req.body.isFecharConta = true;
-                        req.body.valorTotalMesa = rows[0][0].vl_total_mesa
-                        req.body.valorTotalIndividual = rows[0][0].vl_total_individual
-                            // console.log('')
-                            // console.log('vl_total_mesa')
-                            // console.log(req.body.valorTotalMesa);
-                            // console.log('vl_total_individual')
-                            // console.log(req.body.valorTotalIndividual);
+                        req.body.valorTotalMesa = rows[0][0].vl_total_mesa;
+                        req.body.valorTotalIndividual = rows[0][0].vl_total_individual;
+                        // console.log(rows);
+                        // console.log('')
+                        // console.log('vl_total_mesa')
+                        // console.log(req.body.valorTotalMesa);
+                        // console.log('vl_total_individual')
+                        // console.log(req.body.valorTotalIndividual);
                         consultarConta(req, res);
                     }
                 });

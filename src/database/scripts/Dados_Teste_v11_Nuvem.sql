@@ -1,28 +1,33 @@
 -- ------------------------------------------------------------------------------------------------------------------------------
 -- ------------------------------------------ POPULAÇÃO DOS STATUS E CONSTANTES -------------------------------------------------
 -- ------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO tb_status_mesa VALUES (0, 'Vazio');
-INSERT INTO tb_status_mesa VALUES (1, 'Ocupado');
-INSERT INTO tb_status_mesa VALUES (2, 'Manutencao');
-
+-- Tipo de pagamento
 INSERT INTO tb_tp_parcelamento VALUES (0, 'Dinheiro');
 INSERT INTO tb_tp_parcelamento VALUES (1, 'A vista');
 INSERT INTO tb_tp_parcelamento VALUES (2, 'Parcelado Emissor');
 INSERT INTO tb_tp_parcelamento VALUES (3, 'Parcelado Adquirente');
 
+-- Status do Pagamento
 INSERT INTO tb_status_pagamento VALUES (0, 'Em aprovacao');
 INSERT INTO tb_status_pagamento VALUES (1, 'Aprovado');
 INSERT INTO tb_status_pagamento VALUES (2, 'Negado');
 
+-- Status da Mesa
+INSERT INTO tb_status_mesa VALUES (0, 'Vazio');
+INSERT INTO tb_status_mesa VALUES (1, 'Ocupado');
+INSERT INTO tb_status_mesa VALUES (2, 'Manutencao');
 
-INSERT INTO tb_tp_divisao VALUES (0, 'Vazio');
+-- Tipo da Divisão
 INSERT INTO tb_tp_divisao VALUES (1, 'Mesa');
 INSERT INTO tb_tp_divisao VALUES (2, 'Individual');
+INSERT INTO tb_tp_divisao VALUES (3, 'Vazio');
 
+-- Status do Pedido
 INSERT INTO tb_status_pedido VALUES (0, 'Realizado');
 INSERT INTO tb_status_pedido VALUES (1, 'Entregue');
 INSERT INTO tb_status_pedido VALUES (2, 'Finalizado');
 
+-- Categorias de alimento
 INSERT INTO tb_tp_alimento VALUES(1, 'Aperitivos');
 INSERT INTO tb_tp_alimento VALUES(2, 'Porções');
 INSERT INTO tb_tp_alimento VALUES(3, 'Entradas');
@@ -56,7 +61,7 @@ VALUES ('SUJHAMBCO', 234235235, 'Hamburgueria do Sujinho', 'Hamburgueria do Suji
 -- ----------------------------------
 -- ---------- MESAS -----------------
 -- ----------------------------------
--- BARFRAN
+-- BARDOFRAN
 INSERT INTO tb_mesa (cod_mesa, ind_status_mesa, cod_estabelecimento, cod_qr, cod_qr_ocupado, tp_divisao, id, qtd_pessoas)
 VALUES (1, 0, 2, '001BARDOFRAN', '', 0, null, 0);
 
@@ -82,7 +87,7 @@ VALUES (1, 0, 32, '001SUJHAMBCO', '', 0, null, 0);
 -- ---------- CARDAPIOS -------------
 -- ----------------------------------
 
--- BARFRAN
+-- BARDOFRAN
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)
 VALUES ('Batata Frita', 2, 'Batata frita, porção de 500 gramas', 22.50, 'http://www.restaurantecozinhaitaliana.com.br/files/batata.jpg', 2);
 INSERT INTO tb_produto (nome_produto, cod_tp_alimento, dsc_produto, val_produto, link_img_produto, cod_estabelecimento)

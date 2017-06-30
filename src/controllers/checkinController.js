@@ -9,7 +9,7 @@ var MESA_OCUPADA_STRING = 'Ocupado';
 var MESA_MANUTENCAO = 2;
 var MESA_MANUTENCAO_STRING = "Manutencao";
 
-var TIPO_DIVISAO_VAZIO = 0;
+var TIPO_DIVISAO_VAZIO = 3;
 var TIPO_DIVISAO_MESA = 1;
 var TIPO_DIVISAO_INDIVIDUAL = 2;
 
@@ -64,8 +64,10 @@ var checkinController = function(pool) {
 
         if (req.body.usuario)
             var usuario = req.body.usuario; // informações do usuário (nome e email)
-        if (req.body.mesa)
+        if (req.body.mesa) {
             var mesa = req.body.mesa // informações coletadas pelo qr code da mesa (Estabelecimento e numero da mesa)
+            mesa.tipoDivisao = TIPO_DIVISAO_VAZIO; // definição do tipo de definição vazio, para ser passado após a realização do primeiro check-in
+        }
 
         async.series([
                 function(callback) {
@@ -142,9 +144,11 @@ var checkinController = function(pool) {
                     } else
                     // se mesa estiver ocupada, retornar mesa ocupada e informar que é necessário realizar check-in com pessoa x
                     if (statusMesa == MESA_OCUPADA_STRING) {
-
+                        console.log(results[0]);
                         qrCodeOcupado = results[0].cod_qr_ocupado;
                         usuarioResponsavel = results[0].txt_email;
+                        mesa.tipoDivisao = results[0].tipoDivisao; // atribuindo o mesmo tipo de divisão anterior para quando a mesa estiver ocupada
+
                         console.log('====CHECK IN EM MESA OCUPADA: ' + qrCodeOcupado);
                         console.log('USUARIO RESPONSAVEL: ' + usuarioResponsavel);
 

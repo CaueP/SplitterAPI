@@ -8,14 +8,14 @@ chai.use(chaiHttp);
 
 
 describe("CSU3 - API Check-in", function() {
-    describe("Realização de Check-in com dados válidos", () => {
+    describe("Realização de Check-in com dados inválidos", () => {
         it("Realização de Check-in sem informação do usuário", (done) => {
             // criando o request
             var checkin = {
                 mesa: {
-                    qrCode: '001BARFRAN',
+                    qrCode: '001BARDOFRAN',
                     nrMesa: 1,
-                    codEstabelecimento: 'BARFRAN'
+                    codEstabelecimento: 'BARDOFRAN'
                 }
             };
             chai.request(app)
@@ -75,7 +75,7 @@ describe("CSU3 - API Check-in", function() {
 
     });
 
-    describe("Realização de Check-in em mesa livre", () => {
+    describe("Realização de Check-in em mesa livre com dados válidos", () => {
 
         // desocupa a mesa antes de realizar checkin
         before((done) => {
@@ -85,10 +85,10 @@ describe("CSU3 - API Check-in", function() {
                     email: 'ana_maria@gmail.com'
                 },
                 mesa: {
-                    qrCode: '001BARFRAN',
+                    qrCode: '001BARDOFRAN',
                     nrMesa: 1,
                     novoStatus: "Vazio",
-                    codEstabelecimento: 'BARFRAN'
+                    codEstabelecimento: 'BARDOFRAN'
                 }
             };
             // envia request para desocupar a mesa
@@ -110,9 +110,9 @@ describe("CSU3 - API Check-in", function() {
                     email: 'ana_maria@gmail.com'
                 },
                 mesa: {
-                    qrCode: '001BARFRAN',
+                    qrCode: '001BARDOFRAN',
                     nrMesa: 1,
-                    codEstabelecimento: 'BARFRAN'
+                    codEstabelecimento: 'BARDOFRAN'
                 }
             };
             chai.request(app)
@@ -142,10 +142,10 @@ describe("CSU3 - API Check-in", function() {
                     email: 'ana_maria@gmail.com'
                 },
                 mesa: {
-                    qrCode: '001BARFRANana_maria@gmail.com',
+                    qrCode: '001BARDOFRANana_maria@gmail.com',
                     nrMesa: 1,
                     novoStatus: "Ocupado",
-                    codEstabelecimento: 'BARFRAN'
+                    codEstabelecimento: 'BARDOFRAN'
                 }
             };
             // envia request para desocupar a mesa
@@ -169,9 +169,9 @@ describe("CSU3 - API Check-in", function() {
                     email: 'paulo_paulo@gmail.com'
                 },
                 mesa: {
-                    qrCode: '001BARFRANana_maria@gmail.com',
+                    qrCode: '001BARDOFRANana_maria@gmail.com',
                     nrMesa: 1,
-                    codEstabelecimento: 'BARFRAN'
+                    codEstabelecimento: 'BARDOFRAN'
                 }
             };
             chai.request(app)
@@ -199,9 +199,9 @@ describe("CSU3 - API Check-in", function() {
                     email: 'paulo_paulo@gmail.com'
                 },
                 mesa: {
-                    qrCode: '001BARFRAN',
+                    qrCode: '001BARDOFRAN',
                     nrMesa: 1,
-                    codEstabelecimento: 'BARFRAN'
+                    codEstabelecimento: 'BARDOFRAN'
                 }
             };
             chai.request(app)

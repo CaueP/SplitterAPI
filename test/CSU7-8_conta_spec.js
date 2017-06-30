@@ -40,7 +40,7 @@ describe('CSU07/08 - API Conta', () => {
         });
 
         it('Código de Estabelecimento com 16 caracteres deve retornar um erro', (done) => {
-            var codEstabelecimento = 'ABCDEFGHIJKLMNOP';    // 16 caracteres, pois o limite é 15
+            var codEstabelecimento = 'ABCDEFGHIJKLMNOP'; // 16 caracteres, pois o limite é 15
             var codComanda = 1;
 
             chai.request(app)
@@ -54,7 +54,7 @@ describe('CSU07/08 - API Conta', () => {
         });
 
         it.skip('Comanda inexistente deve retornar um erro', (done) => {
-            var codEstabelecimento = 'BARFRAN';
+            var codEstabelecimento = 'BARDOFRAN';
             var codComanda = 321321;
 
             chai.request(app)
@@ -68,7 +68,7 @@ describe('CSU07/08 - API Conta', () => {
         });
 
         it('Comanda invalida deve retornar um erro', (done) => {
-            var codEstabelecimento = 'BARFRAN';
+            var codEstabelecimento = 'BARDOFRAN';
             var codComanda = 'e32e32dw';
 
             chai.request(app)
@@ -82,7 +82,7 @@ describe('CSU07/08 - API Conta', () => {
         });
 
         it('Deve retornar a lista com os pedidos na conta e o total', (done) => {
-            var codEstabelecimento = 'BARFRAN';
+            var codEstabelecimento = 'BARDOFRAN';
             var codComanda = 1;
 
             chai.request(app)
@@ -104,7 +104,7 @@ describe('CSU07/08 - API Conta', () => {
 
     describe('Teste de Fechamento de Conta', () => {
         it('Deve retornar a lista com os pedidos na conta e o total', (done) => {
-            var codEstabelecimento = 'BARFRAN';
+            var codEstabelecimento = 'BARDOFRAN';
             var nrMesa = 1;
             var codComanda = 2;
 
