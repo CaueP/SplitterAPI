@@ -65,7 +65,7 @@ describe("CSU3 - API Check-in", function() {
                 .post('/api/checkin')
                 .send(checkin)
                 .end((err, res) => {
-                    res.should.have.status(404);
+                    res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('isSucesso').eql(false);
                     res.body.should.have.property('error').eql('MesaNaoEncontrada');

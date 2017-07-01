@@ -89,6 +89,10 @@ VALUES (2, 0, 1, '001IMPBEBIDAS', '001IMPBEBIDAS', 3, null, 0);
 INSERT INTO tb_mesa (cod_mesa, ind_status_mesa, cod_estabelecimento, cod_qr, cod_qr_ocupado, tp_divisao, id, qtd_pessoas)
 VALUES (1, 0, 3, '001BARBRAHMA', '', 3, null, 0);
 
+-- HAMBUERGUERIA SUJINHO
+INSERT INTO tb_mesa (cod_mesa, ind_status_mesa, cod_estabelecimento, cod_qr, cod_qr_ocupado, tp_divisao, id, qtd_pessoas)
+VALUES (1, 0, 4, '001SUJHAMBCO', '', 3, null, 0);
+
 -- ----------------------------------
 -- ---------- CARDAPIOS -------------
 -- ----------------------------------

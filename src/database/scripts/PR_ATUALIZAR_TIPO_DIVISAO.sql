@@ -16,7 +16,8 @@ BEGIN
 		SET A.tp_divisao = tp_divisao
 		WHERE A.cod_mesa = cod_mesa
 		AND B.id_associacao_estabelecimento = id_associacao_estabelecimento;
-
+        
+        CALL pr_consultar_status_mesa(cod_mesa, id_associacao_estabelecimento);
 END $$
 
 DELIMITER ;

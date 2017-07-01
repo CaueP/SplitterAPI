@@ -103,7 +103,7 @@ var checkinController = function(pool) {
                         isSucesso: false,
                         error: err.error
                     };
-                    res.status(404);
+                    res.status(200);
                     res.json(respostaCheckin);
                 } else {
 

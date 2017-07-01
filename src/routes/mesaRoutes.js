@@ -55,6 +55,44 @@ var router = function() {
          */
         .get(mesaController.consultarParticipantes);
 
+    mesaRouter.route('/:codEstabelecimento/:nrMesa/:tipoDivisao')
+        /**
+         * @api {put} mesa/participante/:codEstabelecimento/:cod_comanda/:tipoDivisao Atualizar tipo de divisão da mesa
+         * @apiVersion 0.0.1
+         * @apiName Putarticipante
+         * @apiGroup Mesa
+         *
+         * @apiSampleRequest /mesa/participante/TAVERNA/1/1
+         *
+         * @apiSuccess {Number} tipoDivisao Código do tipo da divisão atualizado (1 = mesa, 2 = individual, 3 = vazio)
+         *
+         * @apiSuccessExample {json} Success-Response:
+         *     HTTP/1.1 200 OK
+         * [
+         *          {
+         *              "tipoDivisao": 1",
+         *          }
+         *  ]
+         * 
+         * @apiError ParametrosInvalidos Os parâmetros passados são inválidos.
+         *
+         * @apiErrorExample ParametrosInvalidos:
+         *     HTTP/1.1 422 Unprocessable Entity 
+         *     {
+         *       "error": "ParametrosInvalidos"
+         *     }
+         *
+         * @apiError ParametroNaoEncontrado Algum dos parâmetros passados não foram encontrados no BD.
+         *
+         * @apiErrorExample ParametroNaoEncontrado:
+         *     HTTP/1.1 422 Unprocessable Entity 
+         *     {
+         *       "error": "ParametroNaoEncontrado"
+         *     }
+         *
+         */
+        .put(mesaController.atualizarTipoDivisao);
+
 
     return mesaRouter;
 };
