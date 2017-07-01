@@ -63,25 +63,25 @@ VALUES ('SUJHAMBCO', 234235235, 'Hamburgueria do Sujinho', 'Hamburgueria do Suji
 -- ----------------------------------
 -- BARDOFRAN
 INSERT INTO tb_mesa (cod_mesa, ind_status_mesa, cod_estabelecimento, cod_qr, cod_qr_ocupado, tp_divisao, id, qtd_pessoas)
-VALUES (1, 0, 2, '001BARDOFRAN', '', 0, null, 0);
+VALUES (1, 0, 2, '001BARDOFRAN', '', 3, null, 0);
 
 INSERT INTO tb_mesa (cod_mesa, ind_status_mesa, cod_estabelecimento, cod_qr, cod_qr_ocupado, tp_divisao, id, qtd_pessoas)
-VALUES (2, 0, 2, '002BARDOFRAN', '', 0, null, 0);
+VALUES (2, 0, 2, '002BARDOFRAN', '', 3, null, 0);
 
 -- IMPBEBIDAS
 INSERT INTO tb_mesa (cod_mesa, ind_status_mesa, cod_estabelecimento, cod_qr, cod_qr_ocupado, tp_divisao, id, qtd_pessoas)
-VALUES (2, 0, 12, '001IMPBEBIDA', '', 0, null, 0);
+VALUES (2, 0, 12, '001IMPBEBIDA', '', 3, null, 0);
 
 -- BARBRAHMA
 INSERT INTO tb_mesa (cod_mesa, ind_status_mesa, cod_estabelecimento, cod_qr, cod_qr_ocupado, tp_divisao, id, qtd_pessoas)
-VALUES (1, 0, 22, '001BARBRAHMA', '', 0, null, 0);
+VALUES (1, 0, 22, '001BARBRAHMA', '', 3, null, 0);
 
 INSERT INTO tb_mesa (cod_mesa, ind_status_mesa, cod_estabelecimento, cod_qr, cod_qr_ocupado, tp_divisao, id, qtd_pessoas)
-VALUES (2, 0, 22, '002BARBRAHMA', '', 0, null, 0);
+VALUES (2, 0, 22, '002BARBRAHMA', '', 3, null, 0);
 
 -- HAMBUERGUERIA SUJINHO
 INSERT INTO tb_mesa (cod_mesa, ind_status_mesa, cod_estabelecimento, cod_qr, cod_qr_ocupado, tp_divisao, id, qtd_pessoas)
-VALUES (1, 0, 32, '001SUJHAMBCO', '', 0, null, 0);
+VALUES (1, 0, 32, '001SUJHAMBCO', '', 3, null, 0);
 
 -- ----------------------------------
 -- ---------- CARDAPIOS -------------
