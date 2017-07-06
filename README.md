@@ -1,5 +1,4 @@
 # Splitter API
-Author: Cauê Garcia Polimanti
 
 This repo is a part of a Graduation Project of my graduation in Analysis and Systems Development at FATEC Ipiranga. 
 
